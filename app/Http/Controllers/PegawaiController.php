@@ -24,9 +24,9 @@ class PegawaiController extends Controller
         } else
             return response($data); //->json($data, 200);
     }
-    public function getbynama($nama)
+    public function getbyusername($username)
     {
-        $data = Pegawai::where('nama', $nama)->get();
+        $data = Pegawai::where('username', $username)->get();
         if (is_null($data)) {
             return response()->json('Not Found', 404);
         } else

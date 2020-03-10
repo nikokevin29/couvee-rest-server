@@ -22,7 +22,7 @@ class CustomerController extends Controller
         if (is_null($data)) {
             return response(['Messeage'=>'Not Found'],404);//->json();
         } else
-            return response($data); //->json($data, 200);
+            return response($data);
     }
     public function getbynama($nama)
     {

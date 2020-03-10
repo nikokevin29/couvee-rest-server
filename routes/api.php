@@ -97,3 +97,34 @@ Route::get('supplier','SupplierController@index');
 Route::post('supplier','SupplierController@create');
 Route::put('/supplier/{idsupplier}','SupplierController@update');
 Route::delete('/supplier/{idsupplier}','SupplierController@delete');
+
+//Detil Transaksi Pelayanan
+Route::get('/detil_pelayanan/search/','DetilPelayananController@index');
+Route::get('/detil_pelayanan/search/{nama}','DetilPelayananController@search');
+Route::get('/detil_pelayanan/getbyid/{iddetilpelayanan}','DetilPelayananController@getbyid');
+Route::get('/detil_pelayanan/getbynama/{iddetilpelayanan}','DetilPelayananController@getbynama');
+Route::get('detil_pelayanan','DetilPelayananController@index');
+Route::post('detil_pelayanan','DetilPelayananController@create');
+Route::put('/detil_pelayanan/{iddetilpelayanan}','DetilPelayananController@update');
+Route::delete('/detil_pelayanan/{iddetilpelayanan}','DetilPelayananController@delete');
+
+//Detil Transaksi Penjualan
+Route::get('/detil_penjualan/search/','DetilPenjualanController@index');
+Route::get('/detil_penjualan/search/{nama}','DetilPenjualanController@search');
+Route::get('/detil_penjualan/getbyid/{iddetilpenjualan}','DetilPenjualanController@getbyid');
+Route::get('/detil_penjualan/getbynama/{iddetilpenjualan}','DetilPenjualanController@getbynama');
+Route::get('detil_penjualan','DetilPenjualanController@index');
+Route::post('detil_penjualan','DetilPenjualanController@create');
+Route::put('/detil_penjualan/{iddetilpenjualan}','DetilPenjualanController@update');
+Route::delete('/detil_penjualan/{iddetilpenjualan}','DetilPenjualanController@delete');
+
+
+//Detil Transaksi Pemesanan
+Route::get('/detil_pemesanan/search/','DetilPemesananController@index');
+Route::get('/detil_pemesanan/search/{nama}','DetilPemesananController@search');
+Route::get('/detil_pemesanan/getbyid/{iddetilpemesanan}','DetilPemesananController@getbyid');
+Route::get('/detil_pemesanan/getbynama/{iddetilpemesanan}','DetilPemesananController@getbynama');
+Route::get('detil_pemesanan','DetilPemesananController@index');
+Route::post('detil_pemesanan','DetilPemesananController@create');
+Route::put('/detil_pemesanan/{iddetilpemesanan}','DetilPemesananController@update');
+Route::delete('/detil_pemesanan/{iddetilpemesanan}','DetilPemesananController@delete');
