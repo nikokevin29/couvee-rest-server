@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class JenisHewanController extends Controller
 {
+    public function search($nama)
+    {
+      $data = JenisHewan::where('nama', 'like', "%{$nama}%")->get();
+      return response()->json([
+        'jenis_hewan' => $data
+      ]);
+    }
     public function index(){    
         return JenisHewan::all();
     }

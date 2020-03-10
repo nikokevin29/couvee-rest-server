@@ -42,8 +42,11 @@ Route::put('/hewan/{idhewan}','HewanController@update');
 Route::delete('/hewan/{idhewan}','HewanController@delete');
 
 //Jenis Hewan
+
+Route::get('/jenis_hewan/search/','JenisHewanController@index');
+Route::get('/jenis_hewan/search/{nama}','JenisHewanController@search');
 Route::get('/jenis_hewan/getbyid/{idjenis}','JenisHewanController@getbyid');
-Route::get('/jenis_hewan/getbynama/{idjenis}','JenisHewanController@getbynama');
+Route::get('/jenis_hewan/getbynama/{nama}','JenisHewanController@getbynama');
 Route::get('jenis_hewan','JenisHewanController@index');
 Route::post('jenis_hewan','JenisHewanController@create');
 Route::put('/jenis_hewan/{idjenis}','JenisHewanController@update');
