@@ -128,3 +128,24 @@ Route::get('detil_pemesanan','DetilPemesananController@index');
 Route::post('detil_pemesanan','DetilPemesananController@create');
 Route::put('/detil_pemesanan/{iddetilpemesanan}','DetilPemesananController@update');
 Route::delete('/detil_pemesanan/{iddetilpemesanan}','DetilPemesananController@delete');
+
+//Transaksi Pelayanan
+Route::get('/transaksi_pelayanan/getbyid/{idtransaksipelayanan}','TransaksiPelayananController@getbyid');
+Route::get('transaksi_pelayanan','TransaksiPelayananController@index');
+Route::post('transaksi_pelayanan','TransaksiPelayananController@create');
+Route::put('/transaksi_pelayanan/{idtransaksipelayanan}','TransaksiPelayananController@update');
+Route::delete('/transaksi_pelayanan/{idtransaksipelayanan}','TransaksiPelayananController@delete');
+
+//Transaksi Penjualan
+Route::get('/transaksi_penjualan/getbyid/{idtransaksipenjualan}','TransaksiPenjualanController@getbyid');
+Route::get('transaksi_penjualan','TransaksiPenjualanController@index');
+Route::post('transaksi_penjualan','TransaksiPenjualanController@create');
+Route::put('/transaksi_penjualan/{idtransaksipenjualan}','TransaksiPenjualanController@update');
+Route::delete('/transaksi_penjualan/{idtransaksipenjualan}','TransaksiPenjualanController@delete');
+
+//Pemesanan Barang
+Route::get('/pemesanan_barang/getbyid/{idpemesanan}','PemesananBarangController@getbyid');
+Route::get('pemesanan_barang','PemesananBarangController@index');
+Route::post('pemesanan_barang','PemesananBarangController@create');
+Route::put('/pemesanan_barang/{idpemesanan}','PemesananBarangController@update');
+Route::delete('/pemesanan_barang/{idpemesanan}','PemesananBarangController@delete');

@@ -21,19 +21,19 @@ class DetilPemesananController extends Controller
         $data = new DetilPemesanan;
         $data->idproduk = $request->idproduk;
         $data->jumlah = $request->jumlah;
-        $data->subtotal = $request->subtotal;
+        $data->satuan = $request->satuan;
         $data->save();
         return "Data Masuk";
     }
     public function update(request $request, $iddetilpemesanan){
         $idproduk  = $request->idproduk;
         $jumlah = $request->jumlah;
-        $subtotal = $request->subtotal;
+        $satuan = $request->satuan;
 
         $data = DetilPemesanan::find($iddetilpemesanan);
         $data->idproduk = $idproduk;
         $data->jumlah = $jumlah;
-        $data->subtotal = $subtotal;
+        $data->satuan = $satuan;
         $data->save();
 
         return "Data di Update";
@@ -42,6 +42,6 @@ class DetilPemesananController extends Controller
         
         $data = DetilPemesanan::find($iddetilpemesanan);
         $data->delete();
-        return "Data Dihapus(Soft Delete)";
+        return "Data Dihapus(Hard Delete)";
     }
 }

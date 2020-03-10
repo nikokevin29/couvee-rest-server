@@ -42,6 +42,6 @@ class DetilPelayananController extends Controller
         
         $data = DetilPelayanan::find($iddettilpelayanan);
         $data->delete();
-        return "Data Dihapus(Soft Delete)";
+        return "Data Dihapus(Hard Delete)";
     }
 }

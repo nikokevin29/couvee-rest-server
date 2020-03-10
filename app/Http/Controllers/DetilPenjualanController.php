@@ -42,6 +42,6 @@ class DetilPenjualanController extends Controller
         
         $data = DetilPenjualan::find($iddetilpenjualan);
         $data->delete();
-        return "Data Dihapus(Soft Delete)";
+        return "Data Dihapus(Hard Delete)";
     }
 }
