@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //Customer
+Route::get('/customer/search/','CustomerController@index');
+Route::get('/customer/search/{nama}','CustomerController@search');
 Route::get('/customer/getbyid/{idcustomer}','CustomerController@getbyid');
 Route::get('/customer/getbynama/{nama}','CustomerController@getbynama');
 Route::get('customer','CustomerController@index');
@@ -26,6 +28,9 @@ Route::put('/customer/{idcustomer}','CustomerController@update');
 Route::delete('/customer/{idcustomer}','CustomerController@delete');
 
 //Produk
+
+Route::get('/produk/search/','ProdukController@index');
+Route::get('/produk/search/{nama}','ProdukController@search');
 Route::get('/produk/getbyid/{idproduk}','ProdukController@getbyid');
 Route::get('/produk/getbynama/{idproduk}','ProdukController@getbynama');
 Route::get('produk','ProdukController@index');
@@ -34,6 +39,8 @@ Route::put('/produk/{idproduk}','ProdukController@update');
 Route::delete('/produk/{idproduk}','ProdukController@delete');
 
 //Hewan
+Route::get('/hewan/search/','HewanController@index');
+Route::get('/hewan/search/{nama}','HewanController@search');
 Route::get('/hewan/getbyid/{idhewan}','HewanController@getbyid');
 Route::get('/hewan/getbynama/{idhewan}','HewanController@getbynama');
 Route::get('hewan','HewanController@index');
@@ -42,7 +49,6 @@ Route::put('/hewan/{idhewan}','HewanController@update');
 Route::delete('/hewan/{idhewan}','HewanController@delete');
 
 //Jenis Hewan
-
 Route::get('/jenis_hewan/search/','JenisHewanController@index');
 Route::get('/jenis_hewan/search/{nama}','JenisHewanController@search');
 Route::get('/jenis_hewan/getbyid/{idjenis}','JenisHewanController@getbyid');
@@ -53,6 +59,8 @@ Route::put('/jenis_hewan/{idjenis}','JenisHewanController@update');
 Route::delete('/jenis_hewan/{idjenis}','JenisHewanController@delete');
 
 //Ukuran Hewan
+Route::get('/ukuran_hewan/search/','UkuranHewanController@index');
+Route::get('/ukuran_hewan/search/{nama}','UkuranHewanController@search');
 Route::get('/ukuran_hewan/getbyid/{idukuran}','UkuranHewanController@getbyid');
 Route::get('/ukuran_hewan/getbynama/{idukuran}','UkuranHewanController@getbynama');
 Route::get('ukuran_hewan','UkuranHewanController@index');
@@ -61,6 +69,8 @@ Route::put('/ukuran_hewan/{idukuran}','UkuranHewanController@update');
 Route::delete('/ukuran_hewan/{idukuran}','UkuranHewanController@delete');
 
 //Layanan
+Route::get('/layanan/search/','LayananController@index');
+Route::get('/layanan/search/{nama}','LayananController@search');
 Route::get('/layanan/getbyid/{idlayanan}','LayananController@getbyid');
 Route::get('/layanan/getbynama/{idlayanan}','LayananController@getbynama');
 Route::get('layanan','LayananController@index');
@@ -69,6 +79,8 @@ Route::put('/layanan/{idlayanan}','LayananController@update');
 Route::delete('/layanan/{idlayanan}','LayananController@delete');
 
 //Pegawai
+Route::get('/pegawai/search/','PegawaiController@index');
+Route::get('/pegawai/search/{nama}','PegawaiController@search');
 Route::get('/pegawai/getbyid/{idpegawai}','PegawaiController@getbyid');
 Route::get('/pegawai/getbynama/{idpegawai}','PegawaiController@getbynama');
 Route::get('pegawai','PegawaiController@index');
@@ -77,6 +89,8 @@ Route::put('/pegawai/{idpegawai}','PegawaiController@update');
 Route::delete('/pegawai/{idpegawai}','PegawaiController@delete');
 
 //Supllier
+Route::get('/supplier/search/','SupplierController@index');
+Route::get('/supplier/search/{nama}','SupplierController@search');
 Route::get('/supplier/getbyid/{idsupplier}','SupplierController@getbyid');
 Route::get('/supplier/getbynama/{idsupplier}','SupplierController@getbynama');
 Route::get('supplier','SupplierController@index');

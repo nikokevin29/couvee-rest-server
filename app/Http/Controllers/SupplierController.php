@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class SupplierController extends Controller
 {
+    public function search($nama)
+    {
+      $data = Supplier::where('nama', 'like', "%{$nama}%")->get();
+      return response()->json([
+        'supplier' => $data
+      ]);
+    }
     public function index(){    
         return Supplier::all();
     }

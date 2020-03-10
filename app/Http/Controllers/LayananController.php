@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class LayananController extends Controller
 {
+    public function search($nama)
+    {
+      $data = Layanan::where('nama', 'like', "%{$nama}%")->get();
+      return response()->json([
+        'layanan' => $data
+      ]);
+    }
     public function index(){
         return Layanan::all();
     }

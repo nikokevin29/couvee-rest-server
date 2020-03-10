@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class CustomerController extends Controller
 {
+    public function search($nama)
+    {
+      $data = Customer::where('nama', 'like', "%{$nama}%")->get();
+      return response()->json([
+        'customer' => $data
+      ]);
+    }
     public function index(){
         return Customer::all();
     }

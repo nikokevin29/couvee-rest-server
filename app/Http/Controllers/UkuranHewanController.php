@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class UkuranHewanController extends Controller
 {
+    public function search($nama)
+    {
+      $data = UkuranHewan::where('nama', 'like', "%{$nama}%")->get();
+      return response()->json([
+        'ukuran_hewan' => $data
+      ]);
+    }
     public function index(){    
         return UkuranHewan::all();
     }
