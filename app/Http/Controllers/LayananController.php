@@ -14,15 +14,20 @@ class LayananController extends Controller
       ]);
     }
     public function index(){
-        return Layanan::all();
+        $data = Layanan::all();
+        $response = [
+            'status' => 'OK',
+            'result' => $data
+        ];
+        return response()->json($response,200);
     }
     public function getbyid($idlayanan)
     {
         $data = Layanan::find($idlayanan);
         if (is_null($data)) {
-            return response(['Messeage'=>'Not Found'],404);//->json();
+            return response(['Messeage'=>'Not Found'],404);
         } else
-            return response($data); //->json($data, 200);
+            return response($data);
     }
     public function getbynama($nama)
     {

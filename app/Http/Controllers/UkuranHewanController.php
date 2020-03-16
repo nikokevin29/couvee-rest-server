@@ -13,8 +13,13 @@ class UkuranHewanController extends Controller
         'ukuran_hewan' => $data
       ]);
     }
-    public function index(){    
-        return UkuranHewan::all();
+    public function index(){
+        $data =  UkuranHewan::all();
+        $response = [
+            'status' => 'OK',
+            'result' => $data
+        ];
+        return response()->json($response,200);
     }
     public function getbyid($idukuran)
     {

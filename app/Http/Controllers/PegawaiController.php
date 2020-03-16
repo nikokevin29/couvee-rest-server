@@ -14,7 +14,12 @@ class PegawaiController extends Controller
       ]);
     }
     public function index(){
-        return Pegawai::all();
+        $data = Pegawai::all();
+        $response = [
+            'status' => 'OK',
+            'result' => $data
+        ];
+        return response()->json($response,200);
     }
     public function getbyid($idpegawai)
     {

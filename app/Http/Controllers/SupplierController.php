@@ -14,7 +14,12 @@ class SupplierController extends Controller
       ]);
     }
     public function index(){    
-        return Supplier::all();
+        $data =  Supplier::all();
+        $response = [
+            'status' => 'OK',
+            'result' => $data
+        ];
+        return response()->json($response,200);
     }
     public function getbyid($idsupplier)
     {

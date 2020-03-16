@@ -7,15 +7,20 @@ use Illuminate\Support\Facades\DB;
 class DetilPelayananController extends Controller
 {
     public function index(){
-        return DetilPelayanan::all();
+        $data = DetilPelayanan::all();
+        $response = [
+            'status' => 'OK',
+            'result' => $data
+        ];
+        return response()->json($response,200);
     }
     public function getbyid($iddettilpelayanan)
     {
         $data = DetilPelayanan::find($iddettilpelayanan);
         if (is_null($data)) {
-            return response(['Messeage'=>'Not Found'],404);//->json();
+            return response(['Messeage'=>'Not Found'],404);
         } else
-            return response($data); //->json($data, 200);
+            return response($data);
     }
     public function create(request $request){
         $data = new DetilPelayanan;
