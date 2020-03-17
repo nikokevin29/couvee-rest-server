@@ -4,8 +4,24 @@ namespace App\Http\Controllers;
 use App\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 class PegawaiController extends Controller
 {
+    public function auth(Request $request){
+        $username = $request->username;
+        $password = $request->password;
+        $user = Pegawai::where('username', $username)->first();
+        $pass = Pegawai::where('password', $password)->first();
+        if ($user) {
+            if($pass){
+                return "Login Sukses";
+            }else{
+                return "Password Salah";
+            }
+        }else{
+            return "Maaf username atau password yang anda masukan tidak sesuai.";
+        }
+    }
     public function search($nama)
     {
       $data = Pegawai::where('nama', 'like', "%{$nama}%")->get();

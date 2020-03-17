@@ -79,6 +79,8 @@ Route::put('/layanan/{idlayanan}','LayananController@update');
 Route::delete('/layanan/{idlayanan}','LayananController@delete');
 
 //Pegawai
+Route::post('/pegawai/login/','PegawaiController@auth');
+
 Route::get('/pegawai/search/','PegawaiController@index');
 Route::get('/pegawai/search/{nama}','PegawaiController@search');
 Route::get('/pegawai/getbyid/{idpegawai}','PegawaiController@getbyid');
