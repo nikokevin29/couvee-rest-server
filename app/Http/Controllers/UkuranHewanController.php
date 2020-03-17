@@ -14,12 +14,7 @@ class UkuranHewanController extends Controller
       ]);
     }
     public function index(){
-        $data =  UkuranHewan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return UkuranHewan::all();
     }
     public function getbyid($idukuran)
     {

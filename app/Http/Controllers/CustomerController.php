@@ -14,12 +14,7 @@ class CustomerController extends Controller
       ]);
     }
     public function index(){
-        $data = Customer::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return Customer::all();
     }
     public function getbyid($idcustomer)
     {

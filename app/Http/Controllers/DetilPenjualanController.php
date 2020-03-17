@@ -7,12 +7,7 @@ use Illuminate\Support\Facades\DB;
 class DetilPenjualanController extends Controller
 {
     public function index(){
-        $data =  DetilPenjualan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return DetilPenjualan::all();
     }
     public function getbyid($iddetilpenjualan)
     {

@@ -14,12 +14,8 @@ class HewanController extends Controller
       ]);
     }
     public function index(){
-        $data =  Hewan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return  Hewan::all();
+        
     }
     public function getbyid($idhewan)
     {

@@ -14,12 +14,8 @@ class LayananController extends Controller
       ]);
     }
     public function index(){
-        $data = Layanan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return Layanan::all();
+        
     }
     public function getbyid($idlayanan)
     {

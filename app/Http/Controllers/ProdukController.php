@@ -14,12 +14,7 @@ class ProdukController extends Controller
       ]);
     }
     public function index(){
-        $data =  Produk::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return  Produk::all();
     }
     public function getbyid($idproduk)
     {

@@ -7,12 +7,7 @@ use Illuminate\Support\Facades\DB;
 class PemesananBarangController extends Controller
 {
     public function index(){
-        $data =  PemesananBarang::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return PemesananBarang::all();
     }
     public function getbyid($idpemesanan)
     {

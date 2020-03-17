@@ -7,12 +7,7 @@ use Illuminate\Support\Facades\DB;
 class TransaksiPenjualanController extends Controller
 {
     public function index(){
-        $data =  TransaksiPenjualan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return  TransaksiPenjualan::all();
     }
     public function getbyid($idtransaksipenjualan)
     {

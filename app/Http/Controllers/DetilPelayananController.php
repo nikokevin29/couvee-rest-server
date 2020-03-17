@@ -7,12 +7,7 @@ use Illuminate\Support\Facades\DB;
 class DetilPelayananController extends Controller
 {
     public function index(){
-        $data = DetilPelayanan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return DetilPelayanan::all();
     }
     public function getbyid($iddettilpelayanan)
     {

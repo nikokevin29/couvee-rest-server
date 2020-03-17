@@ -14,12 +14,8 @@ class JenisHewanController extends Controller
       ]);
     }
     public function index(){    
-        $data = JenisHewan::all();
-        $response = [
-            'status' => 'OK',
-            'result' => $data
-        ];
-        return response()->json($response,200);
+        return JenisHewan::all();
+        
     }
     public function getbyid($idjenis)
     {
