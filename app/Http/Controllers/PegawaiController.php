@@ -11,11 +11,15 @@ class PegawaiController extends Controller
         $username = $request->username;
         $password = $request->password;
         $akun = DB::table('pegawai')->where('username', $username)->where('password', $password)->first();
+        $response = [
+            'status' => 'OK',
+            'result' => $akun
+        ];
         if ($akun) {
             if($akun->role == "Owner"){
-                return 'Login Sukses (Owner)';
+                return response()->json($akun, 200);
             }else if($akun->role == "CS"){
-                return 'Login Sukses (CS)';
+                return  response()->json($akun, 200);;
             }else{
                 return 'Bukan CS ataupun Owner';
             }
