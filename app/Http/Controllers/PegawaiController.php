@@ -10,13 +10,14 @@ class PegawaiController extends Controller
     public function auth(Request $request){
         $username = $request->username;
         $password = $request->password;
-        $user = Pegawai::where('username', $username)->first();
-        $pass = Pegawai::where('password', $password)->first();
-        if ($user) {
-            if($pass){
-                return "Login Sukses";
+        $akun = DB::table('pegawai')->where('username', $username)->where('password', $password)->first();
+        if ($akun) {
+            if($akun->role == "Owner"){
+                return 'Login Sukses (Owner)';
+            }else if($akun->role == "CS"){
+                return 'Login Sukses (CS)';
             }else{
-                return "Password Salah";
+                return 'Bukan CS ataupun Owner';
             }
         }else{
             return "Maaf username atau password yang anda masukan tidak sesuai.";
