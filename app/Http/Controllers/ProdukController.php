@@ -33,28 +33,28 @@ class ProdukController extends Controller
             return response()->json($data, 200);
     }
     public function create(request $request){
-        $exploded = explode(',', $request->gambar);
-        $decoded = base64_decode($exploded[1]);
-        if(str_contains($exploded[0], 'jpeg'))
-          $extention = 'jpg';
-        elseif(str_contains($exploded[0], 'gif'))
-          $extention = 'gif';
-        else
-          $extention = 'png';
-
-        $fileName = str_random() .'.'. $extention;
-        $path = public_path() . '/img/produk/' . $fileName;
-        file_put_contents($path, $decoded);
+        
 
         $data = new Produk;
         $data->nama = $request->nama;
         $data->harga = $request->harga;
         $data->stok = $request->stok;
         $data->stokminimum = $request->stokminimum;
-        $data->gambar = $fileName;
         $data->aksi = "Tambah";
         $data->aktor = "0";
         $data->idsupplier = "0";
+
+        if($request->hasFile('gambar')){
+            $file = $request->file('gambar');
+            $extension =$file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/produk/',$filename);
+            $data->gambar = $filename;
+        }else{
+            return "gambar ngga masuk";
+            $data->gambar = " ";
+        }
+
         $data->save();
         return "Data Masuk";
     }
