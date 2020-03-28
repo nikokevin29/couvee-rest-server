@@ -33,8 +33,6 @@ class ProdukController extends Controller
             return response()->json($data, 200);
     }
     public function create(request $request){
-        
-
         $data = new Produk;
         $data->nama = $request->nama;
         $data->harga = $request->harga;
@@ -63,16 +61,15 @@ class ProdukController extends Controller
         $harga = $request->harga;
         $stok = $request->stok;
         $stokminimum = $request->stokminimum;
-        $gambar = $request->gambar;
         $aksi = $request->aksi;
         $aktor = $request->aktor;
+        $idsupplier = $request->idsupplier;
 
         $data = Produk::find($idproduk);
         $data->nama = $nama;
         $data->harga = $harga;
         $data->stok = $stok;
         $data->stokminimum = $stokminimum;
-        $data->gambar = $gambar;
         $data->aksi = "Edit";
         $data->aktor = "0";
         $data->idsupplier = "0";
