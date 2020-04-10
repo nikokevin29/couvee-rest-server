@@ -11,5 +11,10 @@ class Customer extends Model
     protected $table = 'customer';
     protected $primaryKey ='idcustomer';
     protected $dates =['deleted_at'];
+
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
 }
 ?>

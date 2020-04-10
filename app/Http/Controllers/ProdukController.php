@@ -14,7 +14,26 @@ class ProdukController extends Controller
       ]);
     }
     public function index(){
-        return  Produk::all();
+        $datas = Produk::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idproduk'=>$data->idproduk,
+                'nama'=>$data->nama,
+                'harga'=>$data->harga,
+                'stok'=>$data->stok,
+                'stokminimum'=>$data->stokminimum,
+                'gambar'=>$data->gambar,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                'idsupplier'=>$data->getSupplier->nama,
+                ]);
+        }   
+        return $getAll;
     }
     public function getbyid($idproduk)
     {
@@ -39,8 +58,8 @@ class ProdukController extends Controller
         $data->stok = $request->stok;
         $data->stokminimum = $request->stokminimum;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
-        $data->idsupplier = "0";
+        $data->aktor= $request->aktor;
+        $data->idsupplier =$request->idsupplier;
 
         if($request->hasFile('gambar')){
             $file = $request->file('gambar');
@@ -71,8 +90,8 @@ class ProdukController extends Controller
         $data->stok = $stok;
         $data->stokminimum = $stokminimum;
         $data->aksi = "Edit";
-        $data->aktor = "0";
-        $data->idsupplier = "0";
+        $data->aktor = $aktor;
+        $data->idsupplier = $idsupplier;
         $data->save();
 
         return "Data di Update";

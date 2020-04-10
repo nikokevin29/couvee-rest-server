@@ -14,7 +14,22 @@ class LayananController extends Controller
       ]);
     }
     public function index(){
-        return Layanan::all();
+        $datas = Layanan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idlayanan'=>$data->idlayanan,
+                'nama'=>$data->nama,
+                'harga'=>$data->harga,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                ]);
+        }   
+        return $getAll;
         
     }
     public function getbyid($idlayanan)
@@ -37,8 +52,9 @@ class LayananController extends Controller
         $data = new Layanan;
         $data->nama = $request->nama;
         $data->harga = $request->harga;
+
+        $data->aktor = $request->aktor;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
         $data->save();
         return "Data Masuk";
     }
@@ -51,8 +67,9 @@ class LayananController extends Controller
         $data = Layanan::find($idlayanan);
         $data->nama = $nama;
         $data->harga = $harga;
-        $data->aksi = "EDIT";
-        $data->aktor = "0";
+
+        $data->aktor = $aktor;
+        $data->aksi = "Edit";
         $data->save();
 
         return "Data di Update";

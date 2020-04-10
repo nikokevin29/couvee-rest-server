@@ -11,5 +11,10 @@ class Pegawai extends Model
     protected $table = 'pegawai';
     protected $primaryKey ='idpegawai';
     protected $dates =['deleted_at'];
+    
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
 }
 ?>

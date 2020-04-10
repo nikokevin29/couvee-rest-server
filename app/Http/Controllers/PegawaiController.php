@@ -31,7 +31,27 @@ class PegawaiController extends Controller
       ]);
     }
     public function index(){
-        return Pegawai::all();
+        $datas = Pegawai::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idpegawai'=>$data->idpegawai,
+                'nama'=>$data->nama,
+                'alamat'=>$data->alamat,
+                'tgllahir'=>$data->tgllahir,
+                'notelp'=>$data->notelp,
+                'role'=>$data->role,
+                'username'=>$data->username,
+                'password'=>$data->password,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                ]);
+        }   
+        return $getAll;
     }
     public function getbyid($idpegawai)
     {
@@ -57,9 +77,9 @@ class PegawaiController extends Controller
         $data->notelp = $request->notelp;
         $data->role = $request->role;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
         $data->username = $request->username;
         $data->password = $request->password;
+        $data->aktor = $request->aktor;
         $data->save();
         return "Data Masuk";
     }
@@ -82,10 +102,8 @@ class PegawaiController extends Controller
         $data->tgllahir = $tgllahir;
         $data->notelp = $notelp;
         $data->role = $role;
-        $data->aksi = "EDIT";
-        $data->aktor = "0";
-        $data->username = $request->username;
-        $data->password = $request->password;
+        $data->aksi = "Edit";
+        $data->aktor = $aktor;
         $data->save();
 
         return "Data di Update";

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Hewan;
+use App\UkuranHewan;
+use App\JenisHewan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class HewanController extends Controller
@@ -14,8 +16,25 @@ class HewanController extends Controller
       ]);
     }
     public function index(){
-        return  Hewan::all();
-        
+        $datas = Hewan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idhewan'=>$data->idhewan,
+                'nama'=>$data->nama,
+                'tgllahir'=>$data->tgllahir,
+                'jenis'=>$data->jenishewan->nama,
+                'ukuran'=>$data->ukuranhewan->nama,
+                'customer'=>$data->customer->nama,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                ]);
+        }   
+        return $getAll;
     }
     public function getbyid($idhewan)
     {
@@ -37,11 +56,12 @@ class HewanController extends Controller
         $data = new Hewan;
         $data->nama = $request->nama;
         $data->tgllahir = $request->tgllahir;
-        $data->idjenis = "0";
-        $data->idukuran = "0";
+        
+        $data->idjenis = $request->idjenis;
+        $data->idukuran = $request->idukuran;
+        $data->idcustomer = $request->idcustomer;
+        $data->aktor = $request->aktor;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
-        $data->idcustomer = "0";
         $data->save();
         return "Data Masuk";
     }
@@ -57,17 +77,18 @@ class HewanController extends Controller
         $data = Hewan::find($idhewan);
         $data->nama = $nama;
         $data->tgllahir = $tgllahir;
-        $data->idjenis = "0";
-        $data->idukuran = "0";
+
+        $data->idjenis = $idjenis;
+        $data->idukuran = $idukuran;
         $data->aksi = "Edit";
-        $data->aktor = "0";
-        $data->idcustomer = "0";
+        $data->aktor = $aktor;
+        $data->idcustomer = $idcustomer;
         $data->save();
 
         return "Data di Update";
     }
 
-    public function delete($idhewan){
+    public function delete(request $request,$idhewan){
         $data = Hewan::find($idhewan);
         $data->delete();
         return "Data Dihapus(Soft Delete)";

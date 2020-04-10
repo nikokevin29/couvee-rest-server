@@ -11,5 +11,14 @@ class Produk extends Model
     protected $table = 'produk';
     protected $primaryKey ='idproduk';
     protected $dates =['deleted_at'];
+
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
+    public function getSupplier()
+    {
+        return $this->hasOne(Supplier::class, 'idsupplier', 'idsupplier');
+    }
 }
 ?>

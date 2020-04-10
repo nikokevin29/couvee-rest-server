@@ -11,5 +11,10 @@ class JenisHewan extends Model
     protected $table = 'jenis_hewan';
     protected $primaryKey ='idjenis';
     protected $dates =['deleted_at'];
+
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
 }
 ?>

@@ -14,13 +14,30 @@ class CustomerController extends Controller
       ]);
     }
     public function index(){
-        return Customer::all();
+        $datas = Customer::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'ididcustomer'=>$data->idcustomer,
+                'nama'=>$data->nama,
+                'notelp'=>$data->notelp,
+                'alamat'=>$data->alamat,
+                'tgllahir'=>$data->tgllahir,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aksi'=>$data->aksi,
+                'aktor'=>$data->getAktor->nama,
+                ]);
+        }   
+        return $getAll;
     }
     public function getbyid($idcustomer)
     {
         $data = Customer::find($idcustomer);
         if (is_null($data)) {
-            return response(['Messeage'=>'Not Found'],404);//->json();
+            return response(['Messeage'=>'Not Found'],404);
         } else
             return response($data);
     }
@@ -31,7 +48,7 @@ class CustomerController extends Controller
             return response()->json('Not Found', 404);
         } else
             return response()->json($data, 200);
-    }
+        }
     public function create(request $request){
         $data = new Customer;
         $data->nama = $request->nama;
@@ -39,8 +56,9 @@ class CustomerController extends Controller
         $data->alamat = $request->alamat;
         $data->notelp = $request->notelp;
         $data->tgllahir = $request->tgllahir;
+
+        $data->aktor = $request->aktor;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
         $data->save();
         return "Data Masuk";
     }
@@ -57,8 +75,9 @@ class CustomerController extends Controller
         $data->notelp = $notelp;
         $data->alamat = $alamat;
         $data->tgllahir = $tgllahir;
-        $data->aksi = "EDIT";
-        $data->aktor = "0";
+        
+        $data->aktor =$aktor;
+        $data->aksi = "Edit";
         $data->save();
 
         return "Data di Update";
@@ -70,26 +89,4 @@ class CustomerController extends Controller
         $data->delete();
         return "Data Dihapus(Soft Delete)";
     }
-        // public function update(request $request, $idcustomer){
-    //     $data = Customer::where('idcustomer', $idcustomer)->first();
-
-    //     if (is_null($data)) {
-    //         return response()->json('User not found', 404);
-    //     }
-    //     else {
-    //     $data->nama  = $request->nama;
-    //     $data->notelp = $request->notelp;
-    //     $data->alamat = $request->alamat;
-    //     $data->tgllahir = $request->tgllahir;
-    //     $data->aksi = "UPDATES";
-    //     $data->aktor = "0";
-    //         $success = $data->save();
-
-    //         if (!$success) {
-    //             return response()->json('Error Updating', 500);
-    //         } else {
-    //             return response()->json('Success Updating', 200);
-    //         }
-    //     }
-    // }
 }

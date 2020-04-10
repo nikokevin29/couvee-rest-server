@@ -11,5 +11,10 @@ class UkuranHewan extends Model
     protected $table = 'ukuran_hewan';
     protected $primaryKey ='idukuran';
     protected $dates =['deleted_at'];
+
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
 }
 ?>

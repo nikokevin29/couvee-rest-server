@@ -13,9 +13,23 @@ class JenisHewanController extends Controller
         'jenis_hewan' => $data
       ]);
     }
-    public function index(){    
-        return JenisHewan::all();
-        
+    public function index(){
+
+        $datas = JenisHewan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idjenis'=>$data->idjenis,
+                'nama'=>$data->nama,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                ]);
+        }   
+        return $getAll;
     }
     public function getbyid($idjenis)
     {
@@ -36,8 +50,9 @@ class JenisHewanController extends Controller
     public function create(request $request){
         $data = new JenisHewan;
         $data->nama = $request->nama;
+
+        $data->aktor = $request->aktor;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
         $data->save();
         return "Data Masuk";
     }
@@ -48,8 +63,8 @@ class JenisHewanController extends Controller
 
         $data = JenisHewan::find($idjenis);
         $data->nama = $nama;
+        $data->aktor = $aktor;
         $data->aksi = "Edit";
-        $data->aktor = "0";
         $data->save();
 
         return "Data di Update";

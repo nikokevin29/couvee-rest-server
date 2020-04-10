@@ -14,7 +14,21 @@ class UkuranHewanController extends Controller
       ]);
     }
     public function index(){
-        return UkuranHewan::all();
+        $datas = UkuranHewan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idukuran'=>$data->idukuran,
+                'nama'=>$data->nama,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                ]);
+        }   
+        return $getAll;
     }
     public function getbyid($idukuran)
     {
@@ -36,19 +50,20 @@ class UkuranHewanController extends Controller
         $data = new UkuranHewan;
         $data->nama = $request->nama;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
+        $data->aktor = $request->aktor;
         $data->save();
         return "Data Masuk";
     }
     public function update(request $request, $idukuran){
         $nama  = $request->nama;
         $aksi = $request->aksi;
-        $aktor = $request->aktor;
+        $aktor =$request->aktor;
+
 
         $data = UkuranHewan::find($idukuran);
         $data->nama = $nama;
         $data->aksi = "Edit";
-        $data->aktor = "0";
+        $data->aktor = $aktor;
         $data->save();
 
         return "Data di Update";

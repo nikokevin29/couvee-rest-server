@@ -11,5 +11,10 @@ class Layanan extends Model
     protected $table = 'layanan';
     protected $primaryKey ='idlayanan';
     protected $dates =['deleted_at'];
+    
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
 }
 ?>

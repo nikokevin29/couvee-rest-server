@@ -11,5 +11,10 @@ class Supplier extends Model
     protected $table = 'supplier';
     protected $primaryKey ='idsupplier';
     protected $dates =['deleted_at'];
+
+    public function getAktor()
+    {
+        return $this->hasOne(Pegawai::class, 'idpegawai', 'aktor');
+    }
 }
 ?>

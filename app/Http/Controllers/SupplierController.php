@@ -13,8 +13,24 @@ class SupplierController extends Controller
         'supplier' => $data
       ]);
     }
-    public function index(){    
-        return  Supplier::all();
+    public function index(){
+        $datas =  Supplier::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idsupplier'=>$data->idsupplier,
+                'nama'=>$data->nama,
+                'alamat'=>$data->alamat,
+                'notelp'=>$data->notelp,
+                'created_at'=>$data->created_at,
+                'updated_at'=>$data->updated_at,
+                'deleted_at'=>$data->deleted_at,
+                'aktor'=>$data->getAktor->nama,
+                'aksi'=>$data->aksi,
+                ]);
+        }   
+        return $getAll;
         
     }
     public function getbyid($idsupplier)
@@ -39,7 +55,7 @@ class SupplierController extends Controller
         $data->alamat = $request->alamat;
         $data->notelp = $request->notelp;
         $data->aksi = "Tambah";
-        $data->aktor = "0";
+        $data->aktor = $request->aktor;
         $data->save();
         return "Data Masuk";
     }
@@ -55,7 +71,7 @@ class SupplierController extends Controller
         $data->alamat = $alamat;
         $data->notelp = $notelp;
         $data->aksi = "Edit";
-        $data->aktor = "0";
+        $data->aktor = $aktor;
         $data->save();
 
         return "Data di Update";
