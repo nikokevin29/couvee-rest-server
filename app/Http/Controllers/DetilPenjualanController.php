@@ -7,7 +7,18 @@ use Illuminate\Support\Facades\DB;
 class DetilPenjualanController extends Controller
 {
     public function index(){
-        return DetilPenjualan::all();
+        $datas = DetilPenjualan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'iddetilpenjualan '=>$data->iddetilpenjualan,
+                'idproduk'=>$data->getproduk->nama,
+                'jumlah'=>$data->jumlah,
+                'subtotal'=>$data->subtotal,
+                ]);
+        }
+        return $getAll;
     }
     public function getbyid($iddetilpenjualan)
     {

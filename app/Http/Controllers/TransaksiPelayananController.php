@@ -7,7 +7,21 @@ use Illuminate\Support\Facades\DB;
 class TransaksiPelayananController extends Controller
 {
     public function index(){
-        return  TransaksiPelayanan::all();
+        $datas = TransaksiPelayanan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idtransaksipelayanan'=>$data->idtransaksipelayanan,
+                'noLY'=>$data->noLY,
+                'idpegawai'=>$data->getpegawai->nama,
+                'idhewan'=>$data->gethewan->nama,
+                'status'=>$data->status,
+                'diskon'=>$data->diskon,
+                'total'=>$data->total,
+                ]);
+        }
+        return $getAll;
     }
     public function getbyid($idtransaksipelayanan)
     {
@@ -19,12 +33,14 @@ class TransaksiPelayananController extends Controller
     }
     public function create(request $request){
         $data = new TransaksiPelayanan;
-        $data->idpegawai = "0";
-        $data->idhewan = "0";
+        $data->noLY = "";
+        $data->idpegawai = $request->idpegawai;
+        $data->idhewan = $request->idhewan;
         $data->status = $request->status;
         $data->diskon = $request->diskon;
-        $data->idlayanan ="0";
         $data->total = $request->total;
+        $data->save();
+        $data->noLY = TransaksiPelayanan::getNomorLYnoIncrement().$data->idtransaksipelayanan;
         $data->save();
         return "Data Masuk";
     }
@@ -33,15 +49,13 @@ class TransaksiPelayananController extends Controller
         $idhewan = $request->idhewan;
         $status = $request->status;
         $diskon = $request->diskon;
-        $idlayanan = $request->idlayanan;
         $total = $request->total;
 
         $data = TransaksiPelayanan::find($idtransaksipelayanan);
-        $data->idpegawai = "0";
-        $data->idhewan = "0";
+        $data->idpegawai = $idpegawai;
+        $data->idhewan = $idhewan;
         $data->status = $status;
         $data->diskon = $diskon;
-        $data->idlayanan = "0";
         $data->total = $total;
         $data->save();
 

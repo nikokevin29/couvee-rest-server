@@ -7,7 +7,22 @@ use Illuminate\Support\Facades\DB;
 class PemesananBarangController extends Controller
 {
     public function index(){
-        return PemesananBarang::all();
+        $datas = PemesananBarang::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idpemesanan'=>$data->idpemesanan,
+                'noPO'=>$data->noPO,
+                'idpegawai'=>$data->getpegawai->nama,
+                'tglpesan'=>$data->tglpesan,
+                'alamat'=>$data->alamat,
+                'notelp'=>$data->notelp,
+                'tglcetak'=>$data->tglcetak,
+                'status'=>$data->status,
+                ]);
+        }
+        return $getAll;
     }
     public function getbyid($idpemesanan)
     {
@@ -19,11 +34,14 @@ class PemesananBarangController extends Controller
     }
     public function create(request $request){
         $data = new PemesananBarang;
-        $data->idpegawai = "0";
+        $data->noPO = "";
+        $data->idpegawai = $request->idpegawai;
         $data->tglpesan =$request->tglpesan;
         $data->alamat = $request->alamat;
         $data->notelp =$request->notelp;
         $data->status = $request->status;
+        $data->save();
+        $data->noPO = PemesananBarang::getNomorPOnoIncrement().$data->idpemesanan;
         $data->save();
         return "Data Masuk";
     }
@@ -35,7 +53,7 @@ class PemesananBarangController extends Controller
         $status = $request->status;
 
         $data = PemesananBarang::find($idpemesanan);
-        $data->idpegawai = "0";
+        $data->idpegawai = $idpegawai;
         $data->tglpesan = $tglpesan;
         $data->alamat = $alamat;
         $data->notelp = $notelp;

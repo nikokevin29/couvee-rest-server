@@ -1,21 +1,34 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Produk;
 use App\DetilPemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DetilPemesananController extends Controller
 {
     public function index(){
-        return DetilPemesanan::all();
+        $datas = DetilPemesanan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'iddetilpemesanan'=>$data->iddetilpemesanan,
+                'idproduk'=>$data->getproduk->nama,
+                'jumlah'=>$data->jumlah,
+                'satuan'=>$data->satuan,
+                ]);
+        }
+        return $getAll;
     }
     public function getbyid($iddetilpemesanan)
     {
         $data = DetilPemesanan::find($iddetilpemesanan);
         if (is_null($data)) {
-            return response(['Messeage'=>'Not Found'],404);//->json();
+            return response(['Messeage'=>'Not Found'],404);
         } else
-            return response($data); //->json($data, 200);
+            return response($data);
     }
     public function create(request $request){
         $data = new DetilPemesanan;

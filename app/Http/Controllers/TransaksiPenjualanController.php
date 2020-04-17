@@ -7,7 +7,20 @@ use Illuminate\Support\Facades\DB;
 class TransaksiPenjualanController extends Controller
 {
     public function index(){
-        return  TransaksiPenjualan::all();
+        $datas = TransaksiPenjualan::all();
+        $getAll = [];
+        foreach($datas as $data)
+        {
+            array_push($getAll,[
+                'idtransaksipenjualan'=>$data->idtransaksipenjualan,
+                'noPR'=>$data->noPR,
+                'idpegawai'=>$data->getpegawai->nama,
+                'idhewan'=>$data->gethewan->nama,
+                'diskon'=>$data->diskon,
+                'total'=>$data->total,
+                ]);
+        }
+        return $getAll;
     }
     public function getbyid($idtransaksipenjualan)
     {
@@ -19,28 +32,26 @@ class TransaksiPenjualanController extends Controller
     }
     public function create(request $request){
         $data = new TransaksiPenjualan;
-        $data->idpegawai = "0";
-        $data->idhewan = "0";
+        $data->noPR = "";
+        $data->idpegawai = $request->idpegawai;
+        $data->idhewan =$request->idhewan;
         $data->diskon = $request->diskon;
-        $data->idproduk ="0";
         $data->total = $request->total;
+        $data->save();
+        $data->noPR = TransaksiPenjualan::getNomorPRnoIncrement().$data->idtransaksipenjualan;
         $data->save();
         return "Data Masuk";
     }
     public function update(request $request, $idtransaksipenjualan){
         $idpegawai  = $request->idpegawai;
         $idhewan = $request->idhewan;
-        $status = $request->status;
         $diskon = $request->diskon;
-        $idproduk = $request->idproduk;
         $total = $request->total;
 
         $data = TransaksiPenjualan::find($idtransaksipenjualan);
-        $data->idpegawai = "0";
-        $data->idhewan = "0";
-        $data->status = $status;
+        $data->idpegawai = $idpegawai;
+        $data->idhewan = $idhewan;
         $data->diskon = $diskon;
-        $data->idproduk = "0";
         $data->total = $total;
         $data->save();
 

@@ -19,7 +19,7 @@ class CustomerController extends Controller
         foreach($datas as $data)
         {
             array_push($getAll,[
-                'ididcustomer'=>$data->idcustomer,
+                'idcustomer'=>$data->idcustomer,
                 'nama'=>$data->nama,
                 'notelp'=>$data->notelp,
                 'alamat'=>$data->alamat,
