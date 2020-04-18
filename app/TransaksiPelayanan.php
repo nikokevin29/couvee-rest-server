@@ -10,11 +10,11 @@ class TransaksiPelayanan extends Model
     protected $primaryKey ='idtransaksipelayanan';
     public function getpegawai()
     {
-        return $this->hasOne(Pegawai::class, 'idpegawai', 'idpegawai');
+        return $this->belongsTo(Pegawai::class, 'idpegawai', 'idpegawai');
     }
     public function gethewan()
     {
-        return $this->hasOne(Hewan::class, 'idhewan', 'idhewan');
+        return $this->belongsTo(Hewan::class, 'idhewan', 'idhewan');
     }
     public static function getNomorLYnoIncrement(){
         $date = Carbon::now();
@@ -23,6 +23,10 @@ class TransaksiPelayanan extends Model
         $getMonth = $date->format('m');
         $getDay = $date->format('d');
         return "LY"."-".$getYear.$getMonth.$getDay."-";
+    }
+    
+    public function detil_pelayanan(){
+        return $this->hasMany(DetilPelayanan::class,'idtransaksipelayanan','idtransaksipelayanan');
     }
 }
 ?>

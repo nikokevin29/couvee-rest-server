@@ -11,7 +11,7 @@ class DetilPemesanan extends Model
 
     public function getproduk()
     {
-        return $this->hasOne(Produk::class, 'idproduk', 'idproduk');
+        return $this->belongsTo(Produk::class, 'idproduk', 'idproduk');
     }
 }
 ?>

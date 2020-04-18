@@ -18,6 +18,7 @@ class TransaksiPenjualanController extends Controller
                 'idhewan'=>$data->gethewan->nama,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,
+                'detil'=>$data->detil_penjualan,
                 ]);
         }
         return $getAll;

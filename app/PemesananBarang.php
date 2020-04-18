@@ -10,7 +10,7 @@ class PemesananBarang extends Model
     protected $primaryKey ='idpemesanan';
     public function getpegawai()
     {
-        return $this->hasOne(Pegawai::class, 'idpegawai', 'idpegawai');
+        return $this->belongsTo(Pegawai::class, 'idpegawai', 'idpegawai');
     }
     public static function getNomorPOnoIncrement(){
         $date = Carbon::now();
@@ -18,6 +18,12 @@ class PemesananBarang extends Model
         $getMonth = $date->format('m');
         $getDay = $date->format('d');
         return "PO"."-".$getYear."-".$getMonth."-".$getDay."-";
+    }
+    public function detil_pemesanan(){
+        return $this->hasMany(DetilPemesanan::class,'idpemesanan','idpemesanan');
+    }
+    public function getsupplier(){
+        return $this->hasOne(Supplier::class,'idsupplier','idsupplier');
     }
 }
 ?>

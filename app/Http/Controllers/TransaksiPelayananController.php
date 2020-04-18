@@ -19,6 +19,7 @@ class TransaksiPelayananController extends Controller
                 'status'=>$data->status,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,
+                'detil'=>$data->detil_pelayanan,
                 ]);
         }
         return $getAll;

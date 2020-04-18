@@ -14,12 +14,12 @@ class PemesananBarangController extends Controller
             array_push($getAll,[
                 'idpemesanan'=>$data->idpemesanan,
                 'noPO'=>$data->noPO,
+                'idsupplier'=>$data->getsupplier,
                 'idpegawai'=>$data->getpegawai->nama,
                 'tglpesan'=>$data->tglpesan,
-                'alamat'=>$data->alamat,
-                'notelp'=>$data->notelp,
                 'tglcetak'=>$data->tglcetak,
                 'status'=>$data->status,
+                'detil'=>$data->detil_pemesanan,
                 ]);
         }
         return $getAll;
@@ -37,9 +37,8 @@ class PemesananBarangController extends Controller
         $data->noPO = "";
         $data->idpegawai = $request->idpegawai;
         $data->tglpesan =$request->tglpesan;
-        $data->alamat = $request->alamat;
-        $data->notelp =$request->notelp;
         $data->status = $request->status;
+        $data->idsupplier = $request->idsupplier;
         $data->save();
         $data->noPO = PemesananBarang::getNomorPOnoIncrement().$data->idpemesanan;
         $data->save();
@@ -48,15 +47,11 @@ class PemesananBarangController extends Controller
     public function update(request $request, $idpemesanan){
         $idpegawai  = $request->idpegawai;
         $tglpesan = $request->tglpesan;
-        $alamat = $request->alamat;
-        $notelp = $request->notelp;
         $status = $request->status;
 
         $data = PemesananBarang::find($idpemesanan);
         $data->idpegawai = $idpegawai;
         $data->tglpesan = $tglpesan;
-        $data->alamat = $alamat;
-        $data->notelp = $notelp;
         $data->status = $status;
         $data->save();
 
