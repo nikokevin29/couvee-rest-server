@@ -22,8 +22,8 @@ class JenisHewanController extends Controller
             array_push($getAll,[
                 'idjenis'=>$data->idjenis,
                 'nama'=>$data->nama,
-                'created_at'=>$data->created_at,
-                'updated_at'=>$data->updated_at,
+                'created_at'=>$data->created_at->format('Y-m-d H:i:s'),
+                'updated_at'=>$data->updated_at->format('Y-m-d H:i:s'),
                 'deleted_at'=>$data->deleted_at,
                 'aktor'=>$data->getAktor->nama,
                 'aksi'=>$data->aksi,
