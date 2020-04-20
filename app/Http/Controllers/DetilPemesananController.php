@@ -18,6 +18,7 @@ class DetilPemesananController extends Controller
                 'idproduk'=>$data->getproduk->nama,
                 'jumlah'=>$data->jumlah,
                 'satuan'=>$data->satuan,
+                'idpemesanan'=>$data->idpemesanan,
                 ]);
         }
         return $getAll;

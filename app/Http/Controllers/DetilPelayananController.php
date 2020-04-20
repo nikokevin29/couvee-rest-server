@@ -16,6 +16,7 @@ class DetilPelayananController extends Controller
                 'idlayanan'=>$data->getlayanan->nama,
                 'jumlah'=>$data->jumlah,
                 'subtotal'=>$data->subtotal,
+                'idtransaksipelayanan'=>$data->idtransaksipelayanan,
                 ]);
         }
         return $getAll;
