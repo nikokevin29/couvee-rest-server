@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Produk;
 use App\DetilPemesanan;
+use App\PemesananBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DetilPemesananController extends Controller
@@ -31,12 +32,22 @@ class DetilPemesananController extends Controller
         } else
             return response($data);
     }
+    public function getlastid()
+    {
+        $data = PemesananBarang::find(DB::table('pemesanan_barang')->max('idpemesanan'));//get max id
+        if (is_null($data)) {
+            return response(['Messeage'=>'Not Found'],404);
+        } else
+            return response($data->idpemesanan);
+    }
     public function create(request $request){
         $data = new DetilPemesanan;
         $data->idproduk = $request->idproduk;
         $data->jumlah = $request->jumlah;
         $data->satuan = $request->satuan;
+        $data->idpemesanan = $request->idpemesanan;
         $data->save();
+        Produk::where('idproduk', $data->idproduk)->increment('stok', $data->jumlah);//Update Stock di tabel produk
         return "Data Masuk";
     }
     public function update(request $request, $iddetilpemesanan){

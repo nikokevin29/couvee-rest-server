@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\DetilPelayanan;
+use App\TransaksiPelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DetilPelayananController extends Controller
@@ -29,11 +30,20 @@ class DetilPelayananController extends Controller
         } else
             return response($data);
     }
+    public function getlastid()
+    {
+        $data = TransaksiPelayanan::find(DB::table('transaksi_pelayanan')->max('idtransaksipelayanan'));//get max id
+        if (is_null($data)) {
+            return response(['Messeage'=>'Not Found'],404);
+        } else
+            return response($data->idtransaksipelayanan);
+    }
     public function create(request $request){
         $data = new DetilPelayanan;
         $data->idlayanan = $request->idlayanan;
         $data->jumlah = $request->jumlah;
         $data->subtotal = $request->subtotal;
+        $data->idtransaksipelayanan = $request->idtransaksipelayanan;
         $data->save();
         return "Data Masuk";
     }

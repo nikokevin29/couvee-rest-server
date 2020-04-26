@@ -17,6 +17,10 @@ class TransaksiPenjualan extends Model
     {
         return $this->belongsTo(Hewan::class, 'idhewan', 'idhewan');
     }
+    public function getcustomer()
+    {
+        return $this->hasOne(Customer::class, 'idcustomer', 'idcustomer');
+    }
     public static function getNomorPRnoIncrement(){
         $date = Carbon::now();
         $getYear = $date->year;

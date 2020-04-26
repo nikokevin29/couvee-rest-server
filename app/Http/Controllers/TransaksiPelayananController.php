@@ -16,6 +16,7 @@ class TransaksiPelayananController extends Controller
                 'noLY'=>$data->noLY,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
+                'idcustomer'=>$data->getcustomer,
                 'status'=>$data->status,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,
@@ -37,6 +38,7 @@ class TransaksiPelayananController extends Controller
         $data->noLY = "";
         $data->idpegawai = $request->idpegawai;
         $data->idhewan = $request->idhewan;
+        $data->idcustomer = $request->idcustomer;
         $data->status = $request->status;
         $data->diskon = $request->diskon;
         $data->total = $request->total;

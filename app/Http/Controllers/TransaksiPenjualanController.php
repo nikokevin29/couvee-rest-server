@@ -16,6 +16,7 @@ class TransaksiPenjualanController extends Controller
                 'noPR'=>$data->noPR,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
+                'idcustomer'=>$data->getcustomer,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,
                 'detil'=>$data->detil_penjualan,
@@ -35,6 +36,7 @@ class TransaksiPenjualanController extends Controller
         $data = new TransaksiPenjualan;
         $data->noPR = "";
         $data->idpegawai = $request->idpegawai;
+        $data->idcustomer = $request->idcustomer;
         $data->idhewan =$request->idhewan;
         $data->diskon = $request->diskon;
         $data->total = $request->total;

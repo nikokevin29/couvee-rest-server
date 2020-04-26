@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\DetilPenjualan;
+use App\TransaksiPenjualan;
+use App\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DetilPenjualanController extends Controller
@@ -29,12 +31,22 @@ class DetilPenjualanController extends Controller
         } else
             return response($data);
     }
+    public function getlastid()
+    {
+        $data = TransaksiPenjualan::find(DB::table('transaksi_penjualan')->max('idtransaksipenjualan'));//get max id tabel transaksi
+        if (is_null($data)) {
+            return response(['Messeage'=>'Not Found'],404);
+        } else
+            return response($data->idtransaksipenjualan);
+    }
     public function create(request $request){
-        $data = new DetilPenjualan;
-        $data->idproduk = $request->idproduk;
-        $data->jumlah = $request->jumlah;
-        $data->subtotal = $request->subtotal;
-        $data->save();
+        $datas = new DetilPenjualan;
+        $datas->idproduk = $request->idproduk;
+        $datas->jumlah = $request->jumlah;
+        $datas->subtotal = $request->subtotal;
+        $datas->idtransaksipenjualan = $request->idtransaksipenjualan;
+        $datas->save();
+        Produk::where('idproduk', $datas->idproduk)->decrement('stok', $datas->jumlah);//Update Stock di tabel produk
         return "Data Masuk";
     }
     public function update(request $request, $iddetilpenjualan){

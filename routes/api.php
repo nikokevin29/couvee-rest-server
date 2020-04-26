@@ -104,6 +104,9 @@ Route::delete('/supplier/{idsupplier}','SupplierController@delete');
 Route::get('/detil_pelayanan/search/','DetilPelayananController@index');
 Route::get('/detil_pelayanan/search/{nama}','DetilPelayananController@search');
 Route::get('/detil_pelayanan/getbyid/{iddetilpelayanan}','DetilPelayananController@getbyid');
+
+Route::get('/detil_pelayanan/getlastid/','DetilPelayananController@getlastid');
+
 Route::get('/detil_pelayanan/getbynama/{iddetilpelayanan}','DetilPelayananController@getbynama');
 Route::get('detil_pelayanan','DetilPelayananController@index');
 Route::post('detil_pelayanan','DetilPelayananController@create');
@@ -114,6 +117,9 @@ Route::delete('/detil_pelayanan/{iddetilpelayanan}','DetilPelayananController@de
 Route::get('/detil_penjualan/search/','DetilPenjualanController@index');
 Route::get('/detil_penjualan/search/{nama}','DetilPenjualanController@search');
 Route::get('/detil_penjualan/getbyid/{iddetilpenjualan}','DetilPenjualanController@getbyid');
+
+Route::get('/detil_penjualan/getlastid/','DetilPenjualanController@getlastid');
+
 Route::get('/detil_penjualan/getbynama/{iddetilpenjualan}','DetilPenjualanController@getbynama');
 Route::get('detil_penjualan','DetilPenjualanController@index');
 Route::post('detil_penjualan','DetilPenjualanController@create');
@@ -125,6 +131,9 @@ Route::delete('/detil_penjualan/{iddetilpenjualan}','DetilPenjualanController@de
 Route::get('/detil_pemesanan/search/','DetilPemesananController@index');
 Route::get('/detil_pemesanan/search/{nama}','DetilPemesananController@search');
 Route::get('/detil_pemesanan/getbyid/{iddetilpemesanan}','DetilPemesananController@getbyid');
+
+Route::get('/detil_pemesanan/getlastid/','DetilPemesananController@getlastid');
+
 Route::get('/detil_pemesanan/getbynama/{iddetilpemesanan}','DetilPemesananController@getbynama');
 Route::get('detil_pemesanan','DetilPemesananController@index');
 Route::post('detil_pemesanan','DetilPemesananController@create');
