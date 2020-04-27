@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\PemesananBarang;
+use App\DetilPemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PemesananBarangController extends Controller
@@ -59,9 +60,8 @@ class PemesananBarangController extends Controller
     }
 
     public function delete($idpemesanan){
-        
-        $data = PemesananBarang::find($idpemesanan);
-        $data->delete();
-        return "Data Dihapus(Hard Delete)";
+        DetilPemesanan::where('idpemesanan', $idpemesanan)->delete();//delete child di tabel detil
+        PemesananBarang::find($idpemesanan)->delete();
+        return response(['Messeage'=>'Delete Parent and Child Success'],200);
     }
 }

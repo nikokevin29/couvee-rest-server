@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\TransaksiPenjualan;
+use App\DetilPenjualan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TransaksiPenjualanController extends Controller
@@ -14,6 +15,7 @@ class TransaksiPenjualanController extends Controller
             array_push($getAll,[
                 'idtransaksipenjualan'=>$data->idtransaksipenjualan,
                 'noPR'=>$data->noPR,
+                'tanggaltransaksi'=>$data->tanggaltransaksi,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
                 'idcustomer'=>$data->getcustomer,
@@ -46,14 +48,10 @@ class TransaksiPenjualanController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idtransaksipenjualan){
-        $idpegawai  = $request->idpegawai;
-        $idhewan = $request->idhewan;
         $diskon = $request->diskon;
         $total = $request->total;
 
         $data = TransaksiPenjualan::find($idtransaksipenjualan);
-        $data->idpegawai = $idpegawai;
-        $data->idhewan = $idhewan;
         $data->diskon = $diskon;
         $data->total = $total;
         $data->save();
@@ -62,9 +60,8 @@ class TransaksiPenjualanController extends Controller
     }
 
     public function delete($idtransaksipenjualan){
-        
-        $data = TransaksiPenjualan::find($idtransaksipenjualan);
-        $data->delete();
-        return "Data Dihapus(Hard Delete)";
+        DetilPenjualan::where('idtransaksipenjualan', $idtransaksipenjualan)->delete();//delete child di tabel detil
+        TransaksiPenjualan::find($idtransaksipenjualan)->delete();
+        return response(['Messeage'=>'Delete Parent and Child Success'],200);
     }
 }
