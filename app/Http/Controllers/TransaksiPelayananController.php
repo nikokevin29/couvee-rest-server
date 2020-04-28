@@ -66,6 +66,6 @@ class TransaksiPelayananController extends Controller
     public function delete($idtransaksipelayanan){
         DetilPelayanan::where('idtransaksipelayanan', $idtransaksipelayanan)->delete();//delete child di tabel detil
         TransaksiPelayanan::find($idtransaksipelayanan)->delete();
-        return response(['Messeage'=>'Delete Parent and Child Success'],200);
+        return "Data di Delete";
     }
 }

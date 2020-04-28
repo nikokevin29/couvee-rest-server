@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class, //Tambahan
+        Barryvdh\DomPDF\ServiceProvider::class,//Tambahan
 
     ],
 
@@ -228,7 +229,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        
 
+        'PDF' => Barryvdh\DomPDF\Facade::class,//tambahan DomPDF
     ],
 
 ];

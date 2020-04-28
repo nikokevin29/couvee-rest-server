@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\TransaksiPenjualan;
 use App\DetilPenjualan;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TransaksiPenjualanController extends Controller
@@ -18,7 +19,7 @@ class TransaksiPenjualanController extends Controller
                 'tanggaltransaksi'=>$data->tanggaltransaksi,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
-                'idcustomer'=>$data->getcustomer,
+                'idcustomer'=>$data->getcustomer->nama,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,
                 'detil'=>$data->detil_penjualan,
@@ -56,12 +57,21 @@ class TransaksiPenjualanController extends Controller
         $data->total = $total;
         $data->save();
 
-        return "Data di Update";
+        return "Edit Success";
     }
 
     public function delete($idtransaksipenjualan){
         DetilPenjualan::where('idtransaksipenjualan', $idtransaksipenjualan)->delete();//delete child di tabel detil
         TransaksiPenjualan::find($idtransaksipenjualan)->delete();
-        return response(['Messeage'=>'Delete Parent and Child Success'],200);
+        return "Delete Success";
+    }
+    public function cetak_struk($idtransaksipenjualan)
+    {
+    	$header = TransaksiPenjualan::where('idtransaksipenjualan','=',$idtransaksipenjualan)->find();
+        $detil = DetilPenjualan::where('idtransaksipenjualan','=',$idtransaksipenjualan)->get();
+        $pdf = PDF::loadview('struk_penjualan',compact('header','detil'));
+        $pdf->setPaper('A4', 'potrait');
+        $pdf->stream();
+    	return $pdf;
     }
 }

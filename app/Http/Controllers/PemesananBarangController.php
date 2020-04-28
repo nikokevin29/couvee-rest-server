@@ -62,6 +62,6 @@ class PemesananBarangController extends Controller
     public function delete($idpemesanan){
         DetilPemesanan::where('idpemesanan', $idpemesanan)->delete();//delete child di tabel detil
         PemesananBarang::find($idpemesanan)->delete();
-        return response(['Messeage'=>'Delete Parent and Child Success'],200);
+        return "Data di Delete";
     }
 }

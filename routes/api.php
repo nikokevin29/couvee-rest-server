@@ -160,3 +160,4 @@ Route::get('pemesanan_barang','PemesananBarangController@index');
 Route::post('pemesanan_barang','PemesananBarangController@create');
 Route::put('/pemesanan_barang/{idpemesanan}','PemesananBarangController@update');
 Route::delete('/pemesanan_barang/{idpemesanan}','PemesananBarangController@delete');
+

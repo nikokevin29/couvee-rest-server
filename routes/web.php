@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('transaksi_penjualan','TransaksiPenjualanController@index');
+Route::get('/transaksi_penjualan/cetak_struk/{idtransaksipenjualan}','TransaksiPenjualanController@cetak_struk');
