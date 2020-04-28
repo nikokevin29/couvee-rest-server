@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\PemesananBarang;
-use App\DetilPemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PemesananBarangController extends Controller

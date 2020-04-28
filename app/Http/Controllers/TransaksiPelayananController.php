@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\TransaksiPelayanan;
-use App\DetilPelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TransaksiPelayananController extends Controller
@@ -15,10 +14,9 @@ class TransaksiPelayananController extends Controller
             array_push($getAll,[
                 'idtransaksipelayanan'=>$data->idtransaksipelayanan,
                 'noLY'=>$data->noLY,
-                'tanggaltransaksi'=>$data->tanggaltransaksi,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
-                'idcustomer'=>$data->getcustomer->nama,
+                'idcustomer'=>$data->getcustomer,
                 'status'=>$data->status,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,
@@ -50,11 +48,15 @@ class TransaksiPelayananController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idtransaksipelayanan){
+        $idpegawai  = $request->idpegawai;
+        $idhewan = $request->idhewan;
         $status = $request->status;
         $diskon = $request->diskon;
         $total = $request->total;
 
         $data = TransaksiPelayanan::find($idtransaksipelayanan);
+        $data->idpegawai = $idpegawai;
+        $data->idhewan = $idhewan;
         $data->status = $status;
         $data->diskon = $diskon;
         $data->total = $total;
