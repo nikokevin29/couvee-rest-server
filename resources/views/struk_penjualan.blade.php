@@ -17,37 +17,43 @@
         <h5>NOTA LUNAS</h5>
 	</center>
     <div class="container">
-        <p class="text-right">{{$header->noPR}}</p>
-        <p class="text-left">PR-200120-99</p>
+        <p align="right">{{$header->tanggaltransaksi}}</p>
+        <p align="left">{{$header->noPR}}</p>
+		<p align="left">Member :{{$header->getcustomer->nama}}({{$header->gethewan->nama}})</p> 
+		<p align="left">Telpon : {{$header->getcustomer->notelp}}</p>
+		<p align="right">CS : {{$header->getpegawai->nama}}</p>
     </div>
-    <div class="container">
-        <p class="text-left">Member : </p>
-        <p class="text-left">Telpon : </p>
-        <p class="text-left">CS :</p>
+    <div style="border-top:1px solid black; border-bottom:1px solid black; margin-top:2%;" class="text m-2">
+		<div class="container text-center m-4 font-weight-bold">Produk</div>
     </div>
 	<table class='table table-bordered'>
 		<thead>
 			<tr>
-				<th>No</th>
-				<th>Nama Produk</th>
-				<th>Harga</th>
-				<th>jumlah</th>
-				<th>Subtotal</th>
+				<th class="text-center">No</th>
+				<th class="text-center">Nama Produk</th>
+				<th class="text-center">Harga</th>
+				<th class="text-center">jumlah</th>
+				<th class="text-center">Subtotal</th>
 			</tr>
 		</thead>
-		<!-- <tbody>
-			@php $i=1 @endphp
-			@foreach($transaksi_penjualan as $p)
-			<tr>
-				<td></td>{{ $i++ }}</td>
-				<td>{{$p->nama}}</td>
-				<td>{{$p->harga}}</td>
-				<td>{{$p->jumlah}}</td>
-				<td>{{$p->subtotal}}</td>
-			</tr>
-			@endforeach
-		</tbody> -->
+		<tbody>
+				@php $i=1 @endphp
+				@foreach($detil as $p)
+				<tr>
+					<td>{{ $i++ }}</td>
+					<td>{{$p->getproduk->nama}}</td>
+					<td>{{$p->getproduk->harga}}</td>
+					<td>{{$p->jumlah}}</td>
+					<td>{{$p->subtotal}}</td>
+				</tr>
+				@endforeach
+			</tbody>
 	</table>
- 
+	<div class="container">
+        <p align="right">Subtotal : {{$sum}}</p>
+        <p align="right">Diskon :{{ $header->diskon}}</p>
+        <p align="right" class="font-weight-bold">Total :{{ $header->total}}</p>
+    </div>
+
 </body>
 </html>

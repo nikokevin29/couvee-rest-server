@@ -21,6 +21,10 @@ class TransaksiPenjualan extends Model
     {
         return $this->hasOne(Customer::class, 'idcustomer', 'idcustomer');
     }
+    public function getproduk()
+    {
+        return $this->belongsTo(Produk::class, 'idproduk', 'idproduk');
+    }
     public static function getNomorPRnoIncrement(){
         $date = Carbon::now();
         $getYear = $date->year;

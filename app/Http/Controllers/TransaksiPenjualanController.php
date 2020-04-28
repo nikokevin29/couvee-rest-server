@@ -16,7 +16,6 @@ class TransaksiPenjualanController extends Controller
             array_push($getAll,[
                 'idtransaksipenjualan'=>$data->idtransaksipenjualan,
                 'noPR'=>$data->noPR,
-                'tanggaltransaksi'=>$data->tanggaltransaksi,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
                 'idcustomer'=>$data->getcustomer->nama,
@@ -49,10 +48,14 @@ class TransaksiPenjualanController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idtransaksipenjualan){
+        $idpegawai  = $request->idpegawai;
+        $idhewan = $request->idhewan;
         $diskon = $request->diskon;
         $total = $request->total;
 
         $data = TransaksiPenjualan::find($idtransaksipenjualan);
+        $data->idpegawai = $idpegawai;
+        $data->idhewan = $idhewan;
         $data->diskon = $diskon;
         $data->total = $total;
         $data->save();
@@ -67,11 +70,14 @@ class TransaksiPenjualanController extends Controller
     }
     public function cetak_struk($idtransaksipenjualan)
     {
-    	$header = TransaksiPenjualan::where('idtransaksipenjualan','=',$idtransaksipenjualan)->find();
+    	$header = TransaksiPenjualan::where('idtransaksipenjualan','=',$idtransaksipenjualan)->find($idtransaksipenjualan);
         $detil = DetilPenjualan::where('idtransaksipenjualan','=',$idtransaksipenjualan)->get();
-        $pdf = PDF::loadview('struk_penjualan',compact('header','detil'));
-        $pdf->setPaper('A4', 'potrait');
-        $pdf->stream();
-    	return $pdf;
+
+        $sum = 0;
+        foreach($detil as $d){
+            $sum += $d->subtotal;
+        }
+        return PDF::loadview('struk_penjualan',compact('header','detil','sum'))->stream();
+        
     }
 }
