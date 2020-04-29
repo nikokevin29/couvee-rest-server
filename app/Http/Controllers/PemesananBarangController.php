@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\PemesananBarang;
+use App\DetilPemesanan;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PemesananBarangController extends Controller
@@ -45,22 +47,22 @@ class PemesananBarangController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idpemesanan){
-        $idpegawai  = $request->idpegawai;
-        $tglpesan = $request->tglpesan;
-        $status = $request->status;
-
         $data = PemesananBarang::find($idpemesanan);
-        $data->idpegawai = $idpegawai;
-        $data->tglpesan = $tglpesan;
-        $data->status = $status;
+        $data->status = $request->status;
         $data->save();
-
-        return "Data di Update";
+        return "Status Diupdate";
     }
 
     public function delete($idpemesanan){
         DetilPemesanan::where('idpemesanan', $idpemesanan)->delete();//delete child di tabel detil
         PemesananBarang::find($idpemesanan)->delete();
         return "Data di Delete";
+    }
+    public function cetak_struk($idpemesanan)
+    {
+    	$header = PemesananBarang::where('idpemesanan','=',$idpemesanan)->find($idpemesanan);
+        $detil = DetilPemesanan::where('idpemesanan','=',$idpemesanan)->get();
+
+        return PDF::loadview('struk_pemesanan',compact('header','detil'))->stream();
     }
 }

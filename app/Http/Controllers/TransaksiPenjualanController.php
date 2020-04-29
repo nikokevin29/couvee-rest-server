@@ -48,14 +48,10 @@ class TransaksiPenjualanController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idtransaksipenjualan){
-        $idpegawai  = $request->idpegawai;
-        $idhewan = $request->idhewan;
         $diskon = $request->diskon;
         $total = $request->total;
 
         $data = TransaksiPenjualan::find($idtransaksipenjualan);
-        $data->idpegawai = $idpegawai;
-        $data->idhewan = $idhewan;
         $data->diskon = $diskon;
         $data->total = $total;
         $data->save();

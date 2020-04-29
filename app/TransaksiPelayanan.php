@@ -20,6 +20,10 @@ class TransaksiPelayanan extends Model
     {
         return $this->hasOne(Customer::class, 'idcustomer', 'idcustomer');
     }
+    public function getlayanan()
+    {
+        return $this->belongsTo(Layanan::class, 'idlayanan', 'idlayanan');
+    }
     public static function getNomorLYnoIncrement(){
         $date = Carbon::now();
         $getYear = $date->year;

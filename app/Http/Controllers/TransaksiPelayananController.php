@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\TransaksiPelayanan;
+use App\DetilPelayanan;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TransaksiPelayananController extends Controller
@@ -48,15 +50,11 @@ class TransaksiPelayananController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idtransaksipelayanan){
-        $idpegawai  = $request->idpegawai;
-        $idhewan = $request->idhewan;
         $status = $request->status;
         $diskon = $request->diskon;
         $total = $request->total;
 
         $data = TransaksiPelayanan::find($idtransaksipelayanan);
-        $data->idpegawai = $idpegawai;
-        $data->idhewan = $idhewan;
         $data->status = $status;
         $data->diskon = $diskon;
         $data->total = $total;
@@ -69,5 +67,16 @@ class TransaksiPelayananController extends Controller
         DetilPelayanan::where('idtransaksipelayanan', $idtransaksipelayanan)->delete();//delete child di tabel detil
         TransaksiPelayanan::find($idtransaksipelayanan)->delete();
         return "Data di Delete";
+    }
+    public function cetak_struk($idtransaksipelayanan)
+    {
+    	$header = TransaksiPelayanan::where('idtransaksipelayanan','=',$idtransaksipelayanan)->find($idtransaksipelayanan);
+        $detil = DetilPelayanan::where('idtransaksipelayanan','=',$idtransaksipelayanan)->get();
+
+        $sum = 0;
+        foreach($detil as $d){
+            $sum += $d->subtotal;
+        }
+        return PDF::loadview('struk_pelayanan',compact('header','detil','sum'))->stream();
     }
 }

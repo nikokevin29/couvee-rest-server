@@ -25,5 +25,8 @@ class PemesananBarang extends Model
     public function getsupplier(){
         return $this->hasOne(Supplier::class,'idsupplier','idsupplier');
     }
+    public function getproduk(){
+        return $this->belongsTo(Produk::class,'idproduk','idproduk');
+    }
 }
 ?>
