@@ -16,9 +16,10 @@ class TransaksiPelayananController extends Controller
             array_push($getAll,[
                 'idtransaksipelayanan'=>$data->idtransaksipelayanan,
                 'noLY'=>$data->noLY,
+                'tanggaltransaksi'=>$data->tanggaltransaksi,
                 'idpegawai'=>$data->getpegawai->nama,
                 'idhewan'=>$data->gethewan->nama,
-                'idcustomer'=>$data->getcustomer,
+                'idcustomer'=>$data->getcustomer->nama,
                 'status'=>$data->status,
                 'diskon'=>$data->diskon,
                 'total'=>$data->total,

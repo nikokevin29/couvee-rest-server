@@ -16,7 +16,7 @@ class PemesananBarangController extends Controller
             array_push($getAll,[
                 'idpemesanan'=>$data->idpemesanan,
                 'noPO'=>$data->noPO,
-                'idsupplier'=>$data->getsupplier,
+                'idsupplier'=>$data->getsupplier->nama,
                 'idpegawai'=>$data->getpegawai->nama,
                 'tglpesan'=>$data->tglpesan,
                 'tglcetak'=>$data->tglcetak,
