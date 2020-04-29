@@ -36,7 +36,7 @@ class DetilPelayananController extends Controller
         if (is_null($data)) {
             return response(['Messeage'=>'Not Found'],404);
         } else
-            return response($data->idtransaksipelayanan);
+            return response($data);
     }
     public function create(request $request){
         $data = new DetilPelayanan;

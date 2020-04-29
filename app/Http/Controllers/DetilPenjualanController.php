@@ -37,7 +37,7 @@ class DetilPenjualanController extends Controller
         if (is_null($data)) {
             return response(['Messeage'=>'Not Found'],404);
         } else
-            return response($data->idtransaksipenjualan);
+            return response($data);
     }
     public function create(request $request){
         $datas = new DetilPenjualan;
