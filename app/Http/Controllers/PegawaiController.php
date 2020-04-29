@@ -16,7 +16,10 @@ class PegawaiController extends Controller
                 return response()->json($akun, 200);
             }else if($akun->role == "CS"){
                 return  response()->json($akun, 200);
-            }else{
+            }else if($akun->role == "Kasir"){
+                return  response()->json($akun, 200);
+            }
+            else{
                 return 'Bukan CS ataupun Owner';
             }
         }else{
