@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Produk;
+use App\Events\PushNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class ProdukController extends Controller
@@ -93,6 +94,9 @@ class ProdukController extends Controller
         $data->aktor = $aktor;
         $data->idsupplier = $idsupplier;
         $data->save();
+
+        $stok =  DB::table('produk')->where('stok', '<=', DB::raw('stokminimum'))->get();
+        event(new PushNotification($stok->nama));
 
         return "Data di Update";
     }

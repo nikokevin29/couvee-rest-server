@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\TransaksiPelayanan;
 use App\DetilPelayanan;
 use PDF;
+use Nexmo\Laravel\Facade\Nexmo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TransaksiPelayananController extends Controller
@@ -50,18 +51,33 @@ class TransaksiPelayananController extends Controller
         $data->save();
         return "Data Masuk";
     }
-    public function update(request $request, $idtransaksipelayanan){
+    public function update(request $request,$idtransaksipelayanan){
         $status = $request->status;
         $diskon = $request->diskon;
         $total = $request->total;
-
         $data = TransaksiPelayanan::find($idtransaksipelayanan);
         $data->status = $status;
         $data->diskon = $diskon;
         $data->total = $total;
         $data->save();
-
-        return "Data di Update";
+        
+        //get notelp buat dikirim lewat Nexmo
+        $getnotelp = DB::table('transaksi_pelayanan')
+            ->join('customer', 'transaksi_pelayanan.idcustomer', '=','customer.idcustomer')
+            ->select('customer.notelp')
+            ->where('customer.idcustomer','=',$data->idtransaksipelayanan)
+            ->get();
+        //convert object ke String langsung pake foreach
+        foreach($getnotelp as $notlp){
+            $nope = $notlp->notelp;
+        }
+        //send SMS pake Library Nexmo
+        Nexmo::message()->send([
+            'to'   => $nope,
+            'from' => 'Kouvee xBanana',
+            'text' => 'Layanan Anda di Kouvee PetShop Telah Selesai'
+        ]);
+        return 'Transaksi Berhasil di Edit dan SMS dikirim ke nomor '.$nope;
     }
 
     public function delete($idtransaksipelayanan){
@@ -74,6 +90,7 @@ class TransaksiPelayananController extends Controller
     	$header = TransaksiPelayanan::where('idtransaksipelayanan','=',$idtransaksipelayanan)->find($idtransaksipelayanan);
         $detil = DetilPelayanan::where('idtransaksipelayanan','=',$idtransaksipelayanan)->get();
 
+        //get total subtotal di transaksi tertentu
         $sum = 0;
         foreach($detil as $d){
             $sum += $d->subtotal;
