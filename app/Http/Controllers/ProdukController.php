@@ -77,28 +77,23 @@ class ProdukController extends Controller
         return "Data Masuk";
     }
     public function update(request $request, $idproduk){
-        $nama  = $request->nama;
-        $harga = $request->harga;
-        $stok = $request->stok;
-        $stokminimum = $request->stokminimum;
-        $aksi = $request->aksi;
-        $aktor = $request->aktor;
-        $idsupplier = $request->idsupplier;
-
         $data = Produk::find($idproduk);
-        $data->nama = $nama;
-        $data->harga = $harga;
-        $data->stok = $stok;
-        $data->stokminimum = $stokminimum;
+        $data->nama = $request->nama;
+        $data->harga = $request->harga;
+        $data->stok = $request->stok;
+        $data->stokminimum = $request->stokminimum;
         $data->aksi = "Edit";
-        $data->aktor = $aktor;
-        $data->idsupplier = $idsupplier;
+        $data->aktor = $request->aktor;
+        $data->idsupplier =  $request->idsupplier;
         $data->save();
 
-        $stok =  DB::table('produk')->where('stok', '<=', DB::raw('stokminimum'))->get();
-        event(new PushNotification($stok->nama));
+        $stok =Produk::where('idproduk',$idproduk)->first()->stok;
+        $stokminimum =Produk::where('idproduk',$idproduk)->first()->stokminimum;
+        if($stok <= $stokminimum){
+            event(new PushNotification('Test'));
+        }
 
-        return "Data di Update";
+        return "Produk diupdate";
     }
 
     public function delete($idproduk){
