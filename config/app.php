@@ -177,6 +177,7 @@ return [
 
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class, //Tambahan
         Barryvdh\DomPDF\ServiceProvider::class,//Tambahan
+        Kawankoding\Fcm\FcmServiceProvider::class,//Tambahan
 
     ],
 
@@ -232,6 +233,7 @@ return [
         
 
         'PDF' => Barryvdh\DomPDF\Facade::class,//tambahan DomPDF
+        'Fcm' => Kawankoding\Fcm\FcmFacade::class,//Tambahan Laravel-FCM-KawanKoding
     ],
 
 ];

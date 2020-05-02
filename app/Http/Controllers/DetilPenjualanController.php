@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\DetilPenjualan;
 use App\TransaksiPenjualan;
 use App\Produk;
-use App\Events\PushNotification;
+use App\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DetilPenjualanController extends Controller
@@ -47,13 +47,18 @@ class DetilPenjualanController extends Controller
         $datas->subtotal = $request->subtotal;
         $datas->idtransaksipenjualan = $request->idtransaksipenjualan;
         $datas->save();
-        Produk::where('idproduk', $datas->idproduk)->decrement('stok', $datas->jumlah);//Update Stock di tabel produk
         
-        $stok =Produk::where('idproduk',$datas->idproduk)->first()->stok;
-        $stokminimum =Produk::where('idproduk',$datas->idproduk)->first()->stokminimum;
-        if($stok <= $stokminimum){
-            event(new PushNotification('Test'));
-        }
+        
+        $getid = Pegawai::select('idpegawai')->where('role','=','Owner')->get();
+        
+        // fcm($getid)
+        //     ->to() // $recipients must an array
+        //     ->priority('high')  
+        //     ->timeToLive(0)
+        //     ->data([
+        //         'title' => 'Stok Barang Menipis',
+        //         'body' => 'Segera isi barang',
+        //     ])->send();
         return "Data Masuk";
     }
     public function update(request $request, $iddetilpenjualan){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\TransaksiPenjualan;
 use App\DetilPenjualan;
+use App\Produk;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,6 +57,11 @@ class TransaksiPenjualanController extends Controller
         $data->diskon = $diskon;
         $data->total = $total;
         $data->save();
+
+        $detil = DetilPenjualan::where('idtransaksipenjualan','=',$idtransaksipenjualan)->get();
+        foreach($detil as $datas){
+            Produk::where('idproduk', $datas->idproduk)->decrement('stok', $datas->jumlah);//Update Stock di tabel produk
+        }
 
         return "Edit Success";
     }

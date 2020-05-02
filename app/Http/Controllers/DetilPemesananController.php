@@ -47,7 +47,7 @@ class DetilPemesananController extends Controller
         $data->satuan = $request->satuan;
         $data->idpemesanan = $request->idpemesanan;
         $data->save();
-        Produk::where('idproduk', $data->idproduk)->increment('stok', $data->jumlah);//Update Stock di tabel produk
+        
         return "Data Masuk";
     }
     public function update(request $request, $iddetilpemesanan){

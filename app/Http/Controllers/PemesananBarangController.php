@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\PemesananBarang;
 use App\DetilPemesanan;
+use App\Produk;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +51,11 @@ class PemesananBarangController extends Controller
         $data = PemesananBarang::find($idpemesanan);
         $data->status = $request->status;
         $data->save();
+
+        $detil = DetilPemesanan::where('idpemesanan','=',$idpemesanan)->get();
+        foreach($detil as $data){
+            Produk::where('idproduk', $data->idproduk)->increment('stok', $data->jumlah);//Update Stock di tabel produk
+        }
         return "Status Diupdate";
     }
 
