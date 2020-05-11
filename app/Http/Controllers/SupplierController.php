@@ -1,5 +1,5 @@
 <?php
-
+//by Nicholas Kevin
 namespace App\Http\Controllers;
 use App\Supplier;
 use Illuminate\Http\Request;

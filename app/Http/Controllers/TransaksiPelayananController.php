@@ -1,9 +1,10 @@
 <?php
-
+//by Nicholas Kevin
 namespace App\Http\Controllers;
 use App\TransaksiPelayanan;
 use App\DetilPelayanan;
 use PDF;
+use Carbon\Carbon;
 use Nexmo\Laravel\Facade\Nexmo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -96,5 +97,17 @@ class TransaksiPelayananController extends Controller
             $sum += $d->subtotal;
         }
         return PDF::loadview('struk_pelayanan',compact('header','detil','sum'))->stream();
+    }
+    public function laporan_layanan_terlaris($tahun){
+        $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
+        $data = DetilPelayanan::
+        select('L.nama',DB::raw('sum(jumlah) as jumlah'),DB::raw('DATE_FORMAT(tanggaltransaksi, "%M") as bulan'))
+        ->join('transaksi_pelayanan AS T','T.idtransaksipelayanan','=','detil_pelayanan.idtransaksipelayanan')
+        ->join('layanan AS L','L.idlayanan','=','detil_pelayanan.idlayanan')
+        ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
+        ->groupBy('bulan')//Grouping berdasarkan bulan
+        ->orderBy('tanggaltransaksi','asc') //DB::raw('sum(detil_pelayanan.idlayanan)')
+        ->get();
+        return PDF::loadview('laporan_layanan_terlaris',compact('dt','data','tahun'))->stream();
     }
 }

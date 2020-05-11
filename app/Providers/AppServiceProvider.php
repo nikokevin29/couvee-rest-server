@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // For example im gonna locale all dates to Indonesian (ID)
+        config(['app.locale' => 'id']);
+        Carbon::setLocale('id');
     }
 
     /**

@@ -1,10 +1,11 @@
 <?php
-
+//by Nicholas Kevin
 namespace App\Http\Controllers;
 use App\TransaksiPenjualan;
 use App\DetilPenjualan;
 use App\Produk;
 use PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TransaksiPenjualanController extends Controller
@@ -82,5 +83,17 @@ class TransaksiPenjualanController extends Controller
         }
         return PDF::loadview('struk_penjualan',compact('header','detil','sum'))->stream();
         
+    }
+    public function laporan_penjualan_terlaris($tahun){
+        $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
+        $data = DetilPenjualan::
+        select('P.nama',DB::raw('sum(jumlah) as jumlah'),DB::raw('DATE_FORMAT(tanggaltransaksi, "%M") as bulan'))
+        ->join('transaksi_penjualan AS T','T.idtransaksipenjualan','=','detil_penjualan.idtransaksipenjualan')
+        ->join('produk AS P','P.idproduk','=','detil_penjualan.idproduk')
+        ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
+        ->groupBy('bulan')//Grouping berdasarkan bulan
+        ->orderBy('tanggaltransaksi','asc')
+        ->get();
+        return PDF::loadview('laporan_penjualan_terlaris',compact('dt','data','tahun'))->stream();
     }
 }
