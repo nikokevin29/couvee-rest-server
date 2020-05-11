@@ -5,6 +5,7 @@ use App\PemesananBarang;
 use App\DetilPemesanan;
 use App\Produk;
 use PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class PemesananBarangController extends Controller
@@ -70,5 +71,19 @@ class PemesananBarangController extends Controller
         $detil = DetilPemesanan::where('idpemesanan','=',$idpemesanan)->get();
 
         return PDF::loadview('struk_pemesanan',compact('header','detil'))->stream();
+    }
+    public function laporan_pengadaan_tahunan($tahun){
+        $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
+        
+        $data = DetilPemesanan::
+        select('P.harga as harga' ,'jumlah',DB::raw('DATE_FORMAT(tglcetak, "%M") as bulan'))
+        ->join('pemesanan_barang AS PB','PB.idpemesanan','=','detil_pemesanan.idpemesanan')
+        ->join('produk AS P','P.idproduk','=','detil_pemesanan.idproduk')
+        ->whereYear('tglcetak','=',$tahun)//Tahun Sesuai input
+        ->groupBy('bulan')//Grouping berdasarkan bulan
+        ->orderBy('tglcetak','asc')
+        ->get();
+        
+        return PDF::loadview('laporan_pengadaan_tahunan',compact('dt','data','tahun'))->stream();
     }
 }
