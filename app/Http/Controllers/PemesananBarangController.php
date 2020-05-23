@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\PemesananBarang;
 use App\DetilPemesanan;
+use App\DetilPelayanan;
+use App\DetilPenjualan;
 use App\Produk;
 use PDF;
 use Carbon\Carbon;
@@ -76,14 +78,97 @@ class PemesananBarangController extends Controller
         $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
         
         $data = DetilPemesanan::
-        select('P.harga as harga' ,'jumlah',DB::raw('DATE_FORMAT(tglcetak, "%M") as bulan'))
+        select('P.harga as harga' ,DB::raw('sum(jumlah) as jumlah'),DB::raw('DATE_FORMAT(tglpesan, "%M") as bulan'))
         ->join('pemesanan_barang AS PB','PB.idpemesanan','=','detil_pemesanan.idpemesanan')
         ->join('produk AS P','P.idproduk','=','detil_pemesanan.idproduk')
-        ->whereYear('tglcetak','=',$tahun)//Tahun Sesuai input
+        ->whereYear('tglpesan','=',$tahun)//Tahun Sesuai input
         ->groupBy('bulan')//Grouping berdasarkan bulan
-        ->orderBy('tglcetak','asc')
+        ->orderBy('tglpesan','asc')
         ->get();
         
         return PDF::loadview('laporan_pengadaan_tahunan',compact('dt','data','tahun'))->stream();
+    }
+    public function laporan_pengadaan_bulanan($tahun,$bulan){
+        $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
+        
+        $data = DetilPemesanan::
+        select('P.harga as harga' ,DB::raw('sum(jumlah) as jumlah'),DB::raw('DATE_FORMAT(tglpesan, "%M") as bulan'), 'P.nama as nama')
+        ->join('pemesanan_barang AS PB','PB.idpemesanan','=','detil_pemesanan.idpemesanan')
+        ->join('produk AS P','P.idproduk','=','detil_pemesanan.idproduk')
+        ->whereYear('tglpesan','=',$tahun)//Tahun Sesuai input
+        ->whereMonth('tglpesan','=',$bulan)//Bulan Sesuai input
+        ->groupBy('nama')//Grouping berdasarkan Nama
+        ->orderBy('tglpesan','asc')
+        ->get();
+
+        $dateObj = Carbon::createFromFormat('!m', $bulan);
+        $mon = $dateObj->translatedFormat('F'); // Translate Format ke Indonesia
+        
+        return PDF::loadview('laporan_pengadaan_bulanan',compact('dt','data','tahun','mon'))->stream();
+    }
+
+    //Laporan Pendapatan Bulanan
+    public function laporan_pendapatan_bulanan($tahun,$bulan){
+        $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
+        
+        $dataL = DetilPelayanan::
+        select('L.harga as harga' ,DB::raw('sum(jumlah) as jumlah'),DB::raw('DATE_FORMAT(tanggaltransaksi, "%M") as bulan'), 'L.nama as nama','U.nama as ukuran')
+        ->join('transaksi_pelayanan AS TL','TL.idtransaksipelayanan','=','detil_pelayanan.idtransaksipelayanan')
+        ->join('layanan AS L','L.idlayanan','=','detil_pelayanan.idlayanan')
+        ->join('hewan AS H','H.idhewan','=','TL.idhewan')
+        ->join('ukuran_hewan AS U','U.idukuran','=','H.idukuran')
+        ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
+        ->whereMonth('tanggaltransaksi','=',$bulan)//Bulan Sesuai input
+        ->groupBy('nama')//Grouping berdasarkan Nama
+        ->orderBy('nama','asc')
+        ->skip(0)
+        ->take(5)
+        ->get();
+
+        $dataP = DetilPenjualan::
+        select('P.harga as harga' ,DB::raw('sum(jumlah) as jumlah'),DB::raw('DATE_FORMAT(tanggaltransaksi, "%M") as bulan'), 'P.nama as nama')
+        ->join('transaksi_penjualan AS TP','TP.idtransaksipenjualan','=','detil_penjualan.idtransaksipenjualan')
+        ->join('produk AS P','P.idproduk','=','detil_penjualan.idproduk')
+        ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
+        ->whereMonth('tanggaltransaksi','=',$bulan)//Bulan Sesuai input
+        ->groupBy('nama')//Grouping berdasarkan Nama
+        ->orderBy('nama','asc')
+        ->skip(0)
+        ->take(5)
+        ->get();
+
+        $dateObj = Carbon::createFromFormat('!m', $bulan);
+        $mon = $dateObj->translatedFormat('F'); // Translate Format ke Indonesia
+        
+        return PDF::loadview('laporan_pendapatan_bulanan',compact('dt','dataL','dataP','tahun','mon'))->stream();
+    }
+    
+    //Laporan Pendapatan Tahunan
+    public function laporan_pendapatan_tahunan($tahun){
+        $dt = Carbon::now()->translatedFormat('d F Y');// get Sekarang buat tanggal transaksi
+        
+        $dataL = DetilPelayanan::
+        select('L.harga as hargaL' ,DB::raw('sum(jumlah) as jumlahL'),DB::raw('DATE_FORMAT(tanggaltransaksi, "%M") as bulanL'))
+        ->join('transaksi_pelayanan AS TL','TL.idtransaksipelayanan','=','detil_pelayanan.idtransaksipelayanan')
+        ->join('layanan AS L','L.idlayanan','=','detil_pelayanan.idlayanan')
+        ->where('TL.total','!=',0)
+        ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
+        ->groupBy('bulanL')//Grouping berdasarkan bulan
+        ->orderBy('tanggaltransaksi','asc')
+        ->get();
+
+        $dataP = DetilPenjualan::
+        select('P.harga as hargaP' ,DB::raw('sum(jumlah) as jumlahP'),DB::raw('DATE_FORMAT(tanggaltransaksi, "%M") as bulanP'))
+        ->join('transaksi_penjualan AS TP','TP.idtransaksipenjualan','=','detil_penjualan.idtransaksipenjualan')
+        ->join('produk AS P','P.idproduk','=','detil_penjualan.idproduk')
+        ->where('TP.total','!=',0)
+        ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
+        ->groupBy('bulanP')//Grouping berdasarkan bulan
+        ->orderBy('tanggaltransaksi','asc')
+        ->get();
+
+        //$data = array_merge($dataP->toArray(),$dataL->toArray());
+        //return $data;
+        return PDF::loadview('laporan_pendapatan_tahunan',compact('dt','dataL','tahun'))->stream();
     }
 }

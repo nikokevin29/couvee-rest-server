@@ -94,6 +94,8 @@ class TransaksiPenjualanController extends Controller
         ->groupBy('bulan')//Grouping berdasarkan bulan
         ->orderBy('tanggaltransaksi','asc')
         ->get();
+
+        
         return PDF::loadview('laporan_penjualan_terlaris',compact('dt','data','tahun'))->stream();
     }
 }

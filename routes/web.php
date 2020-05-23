@@ -29,3 +29,6 @@ Route::get('/pemesanan_barang/cetak_struk/{idpemesanan}','PemesananBarangControl
 Route::get('/laporan_pelayanan_terlaris/{tahun}','TransaksiPelayananController@laporan_layanan_terlaris');
 Route::get('/laporan_penjualan_terlaris/{tahun}','TransaksiPenjualanController@laporan_penjualan_terlaris');
 Route::get('/laporan_pengadaan_tahunan/{tahun}','PemesananBarangController@laporan_pengadaan_tahunan');
+Route::get('/laporan_pengadaan_bulanan/{tahun}/{bulan}','PemesananBarangController@laporan_pengadaan_bulanan');
+Route::get('/laporan_pendapatan_bulanan/{tahun}/{bulan}','PemesananBarangController@laporan_pendapatan_bulanan');
+Route::get('/laporan_pendapatan_tahunan/{tahun}','PemesananBarangController@laporan_pendapatan_tahunan');

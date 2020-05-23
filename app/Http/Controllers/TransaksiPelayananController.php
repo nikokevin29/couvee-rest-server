@@ -106,7 +106,7 @@ class TransaksiPelayananController extends Controller
         ->join('layanan AS L','L.idlayanan','=','detil_pelayanan.idlayanan')
         ->whereYear('tanggaltransaksi','=',$tahun)//Tahun Sesuai input
         ->groupBy('bulan')//Grouping berdasarkan bulan
-        ->orderBy('tanggaltransaksi','asc') //DB::raw('sum(detil_pelayanan.idlayanan)')
+        ->orderBy('tanggaltransaksi','asc') 
         ->get();
         return PDF::loadview('laporan_layanan_terlaris',compact('dt','data','tahun'))->stream();
     }

@@ -20,8 +20,8 @@
     <div class="container">
 	<p align="left" class="font">Tahun : {{$tahun}}</p>
     </div>
-	<table class='table table-bordered '>
-		<thead>
+	<table class='table table-bordered table-striped'>
+		<thead class="thead-light">
 			<tr>
 				<th class="text-center">No</th>
 				<th class="text-center">Bulan</th>

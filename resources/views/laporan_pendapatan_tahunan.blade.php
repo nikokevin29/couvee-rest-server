@@ -7,7 +7,7 @@
 			font-size: 9pt;
 		}
 	</style>
-	<title>LAPORAN PENGADAAN PRODUK TAHUNAN</title>
+	<title>LAPORAN PENDAPATAN TAHUNAN</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -15,7 +15,7 @@
 
 	<center>
 		<img src="https://firebasestorage.googleapis.com/v0/b/kouvee-shop.appspot.com/o/header.png?alt=media&token=158f0502-39a7-4b08-af50-dcb0f5911922" alt="header" style="width:650px;height:150px;">
-        <h5 class="font-weight-bold">LAPORAN PENGADAAN PRODUK TAHUNAN</h5>
+        <h5 class="font-weight-bold">LAPORAN PENDAPATAN TAHUNAN</h5>
 	</center>
     <div class="container">
 	<p align="left" class="font">Tahun : {{$tahun}}</p>
@@ -25,19 +25,23 @@
 			<tr>
 				<th class="text-center">No</th>
 				<th class="text-center">Bulan</th>
-				<th class="text-center">Jumlah Pengeluaran</th>
+				<th class="text-center">Layanan</th>
+				<th class="text-center">Produk</th>
+				<th class="text-center">Total</th>
 			</tr>
 		</thead>
 		<tbody>
 				@php $i=1  @endphp
 				@php $totalall=0 @endphp
-				@foreach($data as $p)
+				@foreach($dataL as $p)
 				<tr>
 					<td>{{ $i++ }}</td>
-					<td>{{ \Carbon\Carbon::parse($p->bulan)->translatedFormat('F')}}</td>
-					<td> @currency($p->jumlah * $p->harga),- </td>
+					<td>{{\Carbon\Carbon::parse($p->bulanL)->translatedFormat('F')}}</td>
+					<td> @currency($p->jumlahL * $p->hargaL),- </td>{{--Layanan--}}
+					<td> </td>{{--Produk--}}
+					<td> @currency($p->jumlahL * $p->hargaL ),- </td> {{--Layanan + Produk--}}
 				</tr>
-				{{$totalall += $p->jumlah * $p->harga}} {{--get total tabel--}}
+				{{$totalall += $p->jumlahL * $p->hargaL }} {{--get total tabel --}}
 				@endforeach
 		</tbody>
 	</table>
