@@ -1,68 +1,139 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Couvee REST Server
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+REST API backend for a **pet shop management system** — built as a learning project with Laravel 7. Covers customer management, pet records, grooming services, product sales, purchase orders, and PDF reporting.
 
-## About THIS ASSIGMENT
+> **Note:** This is a fictional pet shop ("Couvee") used as a learning exercise. Not intended for production use.
 
-Couvee is a fake Pet Shop, dont go there its a TRAP
+---
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Module | Description |
+|--------|-------------|
+| Authentication | Employee login with role-based access (Owner, CS, Kasir) |
+| Customer | CRUD + search by name/ID |
+| Pet (Hewan) | Pet records linked to owner, breed, and size category |
+| Services (Layanan) | Service catalog for grooming offerings |
+| Products (Produk) | Inventory management with supplier linking |
+| Employees (Pegawai) | Staff management with role tracking |
+| Suppliers | Vendor management |
+| Service Transactions | Grooming/service orders with status tracking |
+| Sales Transactions | Product sales with line items |
+| Purchase Orders | Inventory procurement with PDF reports |
+| Audit Log | Every write operation records actor + action type |
+| PDF Reports | Monthly revenue reports via Laravel DomPDF |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech Stack
 
-## Laravel Sponsors
+| Layer | Technology |
+|-------|-----------|
+| Framework | Laravel 7.0 |
+| Language | PHP 7.2.5+ |
+| Database | MySQL |
+| Auth | Token-based API guard + Session guard |
+| PDF | Laravel DomPDF |
+| Real-time | Pusher 4.1 |
+| Notifications | Firebase Cloud Messaging (FCM) + Nexmo SMS |
+| Testing | PHPUnit 8.5 |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## API Routes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+Base prefix: `/api`
 
-## Contributing
+```
+POST   /pegawai/login
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Customer
+GET    /customer
+POST   /customer
+GET    /customer/{id}
+PUT    /customer/{id}
+DELETE /customer/{id}
 
-## Code of Conduct
+# Pet (Hewan)
+GET    /hewan
+POST   /hewan
+GET    /hewan/{id}
+PUT    /hewan/{id}
+DELETE /hewan/{id}
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Services, Products, Employees, Suppliers
+# → same CRUD pattern as above
 
-## Security Vulnerabilities
+# Transactions
+POST   /transaksi-pelayanan          # Service order
+POST   /transaksi-penjualan          # Product sale
+POST   /pemesanan-barang             # Purchase order
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Reports
+GET    /laporan/pendapatan-bulanan   # Monthly revenue PDF
+```
 
-## License
+## Project Structure
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+app/
+├── Http/Controllers/    # 16 controllers (one per entity)
+├── Http/Middleware/     # 7 middleware files
+├── Models/              # 14+ Eloquent models with soft deletes
+routes/
+├── api.php              # API route definitions
+├── web.php
+database/
+├── migrations/
+└── seeds/
+```
+
+## Getting Started
+
+### Requirements
+
+- PHP 7.2.5+
+- Composer
+- MySQL
+- Node.js + npm (for asset compilation)
+
+### Installation
+
+```bash
+git clone https://github.com/nikokevin29/couvee-rest-server.git
+cd couvee-rest-server
+
+composer install
+npm install
+
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=couvee
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+```bash
+php artisan migrate
+php artisan db:seed
+
+php artisan serve
+```
+
+API will be available at `http://localhost:8000/api`.
+
+## Notes
+
+This project was built to learn:
+- Laravel REST API structure
+- Eloquent ORM relationships and soft deletes
+- Role-based authentication patterns
+- Transaction and line-item data modeling
+- PDF report generation with DomPDF
+
+---
+
+*Built with Laravel 7 · MySQL · PHP*
